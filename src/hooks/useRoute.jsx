@@ -1,8 +1,11 @@
 import React from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+
 export default function useRoute() {
-  const navigate = useNavigate();
   const params = useParams();
-  const [searchParams, useSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
   return { params, navigate, searchParams: [searchParams, setSearchParams] };
 }

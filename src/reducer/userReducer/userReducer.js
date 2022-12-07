@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { http } from '../../utils/baseUrl';
 import { history } from '../../utils/history';
 import { USER_LOGIN } from '../../utils/constant';
-import { removeLocal } from '../../utils/config';
+
+import { getStringLocal, saveStringLocal, removeLocal, } from '../../utils/config';
 const initialState = {
     accountInfo: {},
 }
@@ -29,7 +30,7 @@ export const getAccountInfo = async(dispatch)=>{
 } 
 export const callSignUp = (signUpInfo) => async(dispatch) =>{
 try{
-    const signUp = await http.post("/api/Users/signup", signUpInfo);
+    const signUp = await http.post("api/Users/signup", signUpInfo);
     alert("Đăng ký thành công");
     history.push("/login")
 }catch(err){
@@ -38,7 +39,7 @@ try{
 }
 export const callSignIn = (signInInfo) => async(dispatch) =>{
     try{
-        const signUp = await http.post("/api/Users/signin", signInInfo);
+        const signUp = await http.post("/Users/signin", signInInfo);
         history.push("/")
     }catch(err){
         return new Promise((resolve, reject)=> resolve({isError: true, message: err.response.data.content}))
