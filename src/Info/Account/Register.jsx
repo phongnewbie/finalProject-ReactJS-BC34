@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Select, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { callSignUp } from "../../reducer/userReducer/userReducer";
+import { callSignUp } from "../../redux/reducers/userReducer/userReducer";
 export default function Register() {
   const dispatch = useDispatch();
   const inFormation = (value) => {

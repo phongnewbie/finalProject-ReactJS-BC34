@@ -1,11 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
-import MainPage from './components/LayOut/MainPage';
-// import './components/LayOut/main.css'
-import LogIn from './Info/Account/LogIn';
-import Register from './Info/Account/Register';
-// import AllBody from './components/LayOut/AllBody';
-
+import "./App.css";
 
 import {
   BrowserRouter,
@@ -14,20 +7,20 @@ import {
   unstable_HistoryRouter as HistoryRouter,
 } from "react-router-dom";
 import { history } from "./utils/history";
+import "antd/dist/antd.css";
+
+import LogIn from "./Info/Account/LogIn";
+import Register from "./Info/Account/Register";
+import TrangChu from "./templates/trangChu/TrangChu";
 
 function App() {
   return (
     <div className="App">
-     <HistoryRouter history={history}>
-       <Routes>
-         <Route path="/" element={<MainPage/>}>
-           
-         </Route>
-         
-
-        
-       </Routes>
-     </HistoryRouter>
+      <HistoryRouter history={history}>
+        <Routes>
+          <Route path="/" element={<TrangChu />} />
+        </Routes>
+      </HistoryRouter>
     </div>
   );
 }

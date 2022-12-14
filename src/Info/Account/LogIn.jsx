@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import useRoute from "../../hooks/useRoute";
 import { Button, Form, Input, notification } from "antd";
-import { callSignIn } from "../../reducer/userReducer/userReducer";
+import { callSignIn } from "../../redux/reducers/userReducer/userReducer";
 import { USER_LOGIN } from "../../utils/constant";
 import { useDispatch } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 export default function LogIn() {
