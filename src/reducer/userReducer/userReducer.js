@@ -30,7 +30,7 @@ export const getAccountInfo = async(dispatch)=>{
 } 
 export const callSignUp = (signUpInfo) => async(dispatch) =>{
 try{
-    const signUp = await http.post("api/Users/signup", signUpInfo);
+    const signUp = await http.post("Users/signup", signUpInfo);
     alert("Đăng ký thành công");
     history.push("/login")
 }catch(err){

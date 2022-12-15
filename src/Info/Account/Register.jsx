@@ -1,122 +1,116 @@
 import React, { useState } from "react";
-import { Form, Button, Select, Input } from "antd";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { USER_LOGIN } from "../../utils/constant";
+import { getStringLocal } from "../../utils/config";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Input, notification } from "antd";
 import { callSignUp } from "../../reducer/userReducer/userReducer";
 export default function Register() {
-  const dispatch = useDispatch();
-  const inFormation = (value) => {
-    dispatch(callSignUp(value));
+  let navigate = useNavigate();
+  let isLogin = getStringLocal(USER_LOGIN);
+  let dispatch = useDispatch();
+  const onSubmit = (values) => {
+    dispatch(callSignUp(values));
+    console.log(callSignUp);
   };
-
-  const websiteLayout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
+  const openNotificationWithIcon = () => {
+    notification["error"]({
+      message: "Notification !",
+      description: "Email already in use!",
+    });
   };
   return (
-    <div style={{ width: "600px", marginTop: "100px" }} className="container">
-      <h2 className="text-center mb-5">Đăng ký</h2>
-      <div className="signup-warp">
-        <Form {...websiteLayout} name="register" onFinish={inFormation}>
-          <Form.Item
-            name="taiKhoan"
-            label="Tài Khoản"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập tài khoản !",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="matKhau"
-            label="Mật khẩu"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập mật khẩu!",
-              },
-            ]}
-            hasFeedback
-          >
-            <Input.Password />
-          </Form.Item>
+    <section className="vh-100 pt-5">
+      <div className="container-fluid h-custom">
+        <div className="row d-flex justify-content-center align-items-center h-100">
+          <div className="col-md-8 col-lg-6 col-xl-4">
+            <Form
+              name="basic"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={onSubmit}
+              autoComplete="on"
+            >
+              <span id="signup">Sign up</span>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your email !",
+                  },
+                  {
+                    type: "email",
+                  },
+                ]}
+              >
+                <Input type="email" placeholder="Email" />
+              </Form.Item>
 
-          <Form.Item
-            name="matKhau"
-            label="Nhập lại mật khẩu"
-            dependencies={["matKhau"]}
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Mật khẩu không khớp!",
-              },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("matKhau") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error("Mật khẩu không khớp!"));
-                },
-              }),
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item
-            name="email"
-            label="E-mail"
-            rules={[
-              // {
-              //   type: "email",
-              //   message: "Email không đúng định dạng !",
-              // },
-              {
-                required: true,
-                message: "Hãy nhập Email !",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="soDt"
-            label="Điện thoại"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập số điện thoại",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="hoTen"
-            label="Họ tên"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập họ tên",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ ...websiteLayout.wrapperCol, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+              <Form.Item
+                name="passWord"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your password!",
+                  },
+                  {
+                    type: "string",
+                    min: 0,
+                    max: 10,
+                  },
+                ]}
+              >
+                <Input type="password" placeholder="Password" />
+              </Form.Item>
+              <Form.Item
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your name!",
+                  },
+                ]}
+              >
+                <Input placeholder="Name" />
+              </Form.Item>
+              <Form.Item
+                name="phoneNumber"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your phone number!",
+                  },
+                  {
+                    type: "string",
+                    min: 10,
+                    max: 10,
+                  },
+                ]}
+              >
+                <Input placeholder="Phone number" />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Sign up
+                </Button>
+              </Form.Item>
+              <span>
+                You have an account ?{" "}
+                <a
+                  onClick={() => {
+                    navigate("/Account/Login");
+                  }}
+                  className="fw-bolder text-black"
+                >
+                  Log in
+                </a>
+              </span>
+            </Form>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -7,27 +7,22 @@ import Register from './Info/Account/Register';
 // import AllBody from './components/LayOut/AllBody';
 
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  unstable_HistoryRouter as HistoryRouter,
-} from "react-router-dom";
+import { Routes, Route, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { history } from "./utils/history";
 
 function App() {
   return (
     <div className="App">
-     <HistoryRouter history={history}>
-       <Routes>
-         <Route path="/" element={<MainPage/>}>
-           
-         </Route>
-         
+      <HistoryRouter history={history}>
+        <Routes>
+          <Route path="./Info/Account/LogIn.jsx" element={<LogIn/>}>
+            <Route path="register" element={<Register/>}/>
 
+          </Route>
+        </Routes>
+
+      </HistoryRouter>
         
-       </Routes>
-     </HistoryRouter>
     </div>
   );
 }
