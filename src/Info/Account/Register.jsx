@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { USER_LOGIN } from "../../utils/constant";
+import { callSignUp } from "../../redux/reducers/userReducer/userReducer";
+import { useNavigate } from "react-router";
 import { getStringLocal } from "../../utils/config";
-import { useNavigate } from "react-router-dom";
-import { Button, Form, Input, notification } from "antd";
-import { callSignUp } from "../../reducer/userReducer/userReducer";
+import { USER_LOGIN } from "../../utils/constant";
+import { Form, notification, Input, Button } from "antd";
 export default function Register() {
   let navigate = useNavigate();
   let isLogin = getStringLocal(USER_LOGIN);
