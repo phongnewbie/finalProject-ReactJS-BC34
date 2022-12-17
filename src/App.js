@@ -15,8 +15,10 @@ function App() {
     <div className="App">
       <HistoryRouter history={history}>
         <Routes>
-          <Route path="./Info/Account/LogIn.jsx" element={<LogIn/>}>
-            <Route path="register" element={<Register/>}/>
+            <Route>
+            <Route path="/login" element={<LogIn/>}>
+            <Route  element={<Register/>}/> 
+            </Route>
           </Route>
           <Route path="/" element={<TrangChu />}>
             <Route path="/" element={<IndexCyberbugs />} />

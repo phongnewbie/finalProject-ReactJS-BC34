@@ -21,7 +21,7 @@ export const {getAccount} = userReducer.actions
 export default userReducer.reducer
 export const getAccountInfo = async(dispatch)=>{
     try{
-        const getApiUser = await http.post("/api/Users/getUser")
+        const getApiUser = await http.post("/Users/getUser")
         dispatch(getAccount(getApiUser.data.content))
     }catch(err){
         console.log(err);
@@ -30,7 +30,7 @@ export const getAccountInfo = async(dispatch)=>{
 } 
 export const callSignUp = (signUpInfo) => async(dispatch) =>{
 try{
-    const signUp = await http.post("Users/signup", signUpInfo);
+    const signUp = await http.post("/user/signup", signUpInfo);
     alert("Đăng ký thành công");
     history.push("/login")
 }catch(err){
@@ -39,7 +39,9 @@ try{
 }
 export const callSignIn = (signInInfo) => async(dispatch) =>{
     try{
-        const signUp = await http.post("/Users/signin", signInInfo);
+        const signIn = await http.post("/user/signin", signInInfo);
+        console.log(signIn);
+        saveStringLocal(USER_LOGIN, signIn.data.content.accessToken);
         history.push("/")
     }catch(err){
         return new Promise((resolve, reject)=> resolve({isError: true, message: err.response.data.content}))

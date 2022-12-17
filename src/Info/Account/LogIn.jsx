@@ -4,49 +4,42 @@ import useRoute from "../../hooks/useRoute";
 
 import { useDispatch } from "react-redux";
 import { USER_LOGIN } from "../../utils/constant";
-import { saveStringLocal } from "../../utils/config";
+import { getStringLocal } from "../../utils/config";
 import "../../components/LayOut/main.css";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import Register from "./Register";
 import { callSignIn } from "../../reducer/userReducer/userReducer";
 
 export default function LogIn() {
-  // const {
-  //   params,
-  //   navigate,
-  //   searchParams: [searchParams, setSearchParams],
-  // } = useRoute();
-  // let [reset, setReset] = useState(0);
-  // let verifyLogin = localStorage.getItem(USER_LOGIN);
-  // let dispatch = useDispatch();
-  // const onFinish = async (values) => {
-  //   try {
-  //     let { taiKhoan, matKhau } = values;
-  //     const result = await dispatch(callSignIn({ taiKhoan, matKhau }));
-  //     if (result.checkError == true) {
-  //       opentAlertMessage(result.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // const opentAlertMessage = (message) => {
-  //   notification["error"]({
-  //     message: "Thong Bao !",
-  //     description: message,
-  //   });
-  // };
+  const {
+    params,
+    navigate,
+    searchParams: [searchParams, setSearchParams],
+  } = useRoute();
+  let [reset, setReset] = useState(0);
+  let verifyLogin = localStorage.getItem(USER_LOGIN);
+  let dispatch = useDispatch();
+  // let navigate = useNavigate();
+  const onFinish = async (values) => {
+    try {
+      let { email, passWord } = values;
+      const result = await dispatch(callSignIn({ email, passWord }));
+      if (result.isError == true) {
+        opentAlertMessage(result.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const opentAlertMessage = (message) => {
+    notification["error"]({
+      message: "Thong Bao !",
+      description: message,
+    });
+  };
+
   return (
     <div className="container mt-3 text-left">
-      <button
-        className="btn-danger"
-        onClick={() => {
-          // setReset(reset + 1);
-          // localStorage.removeItem(USER_LOGIN);
-        }}
-      >
-        LOGOUT
-      </button>
       <div>
         <div style={{ marginTop: "100px" }}>
           <h2 className="text-center mb-5">Đăng nhập</h2>
@@ -62,7 +55,7 @@ export default function LogIn() {
               initialValues={{
                 remember: true,
               }}
-              // onFinish={onFinish}
+              onFinish={onFinish}
               autoComplete="off"
             >
               <Form.Item
@@ -98,12 +91,10 @@ export default function LogIn() {
                 }}
               >
                 <span className="login-link">
-                  <NavLink to="/src/Info/Account/Register.jsx">
-                    Bạn chưa có tài khoản
-                  </NavLink>{" "}
-                  | <a href="/">trang chủ</a>
+                  <NavLink to="/register">Bạn chưa có tài khoản?</NavLink> |{""}
+                  <a href="/">Trang Chủ</a>
                 </span>
-                <Button className="mt-2" type="primary" htmlType="submit">
+                <Button className="mt-2 ms-2" type="primary" htmlType="submit">
                   Đăng nhập
                 </Button>
               </Form.Item>
