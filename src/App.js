@@ -1,8 +1,12 @@
 import "./App.css";
 
-import { Routes, Route, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  unstable_HistoryRouter as HistoryRouter,
+} from "react-router-dom";
 import { history } from "./utils/history";
-import 'antd/dist/reset.css';
+import "antd/dist/reset.css";
 
 import LogIn from "./Info/Account/LogIn";
 import Register from "./Info/Account/Register";
@@ -15,9 +19,9 @@ function App() {
     <div className="App">
       <HistoryRouter history={history}>
         <Routes>
-            <Route>
-            <Route path="/login" element={<LogIn/>}>
-            <Route  element={<Register/>}/> 
+          <Route>
+            <Route path="/login" element={<LogIn />}>
+              <Route element={<Register />} />
             </Route>
           </Route>
           <Route path="/" element={<TrangChu />}>

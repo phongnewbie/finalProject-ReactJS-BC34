@@ -59,8 +59,8 @@ export default function LogIn() {
               autoComplete="off"
             >
               <Form.Item
-                label="Tài khoản"
-                name="taiKhoan"
+                label="Email"
+                name="email"
                 rules={[
                   {
                     required: true,
@@ -73,7 +73,7 @@ export default function LogIn() {
 
               <Form.Item
                 label="Mật khẩu"
-                name="matKhau"
+                name="passWord"
                 rules={[
                   {
                     required: true,
