@@ -30,21 +30,22 @@ export const getAccountInfo = async(dispatch)=>{
 } 
 export const callSignUp = (signUpInfo) => async(dispatch) =>{
 try{
-    const signUp = await http.post("/user/signup", signUpInfo);
+    const signUp = await http.post("/Users/signup", signUpInfo);
     alert("Đăng ký thành công");
     history.push("/login")
 }catch(err){
     alert("Hong đăng ký được")
+    console.log(err);
 }
 }
 export const callSignIn = (signInInfo) => async(dispatch) =>{
     try{
-        const signIn = await http.post("/user/signin", signInInfo);
+        const signIn = await http.post("/Users/signin", signInInfo);
         console.log(signIn);
         saveStringLocal(USER_LOGIN, signIn.data.content.accessToken);
         history.push("/")
     }catch(err){
-        return new Promise((resolve, reject)=> resolve({isError: true, message: err.response.data.content}))
+        return new Promise((resolve, reject)=> resolve({isError: true, message: err.response?.data.content}))
     }
     }
 

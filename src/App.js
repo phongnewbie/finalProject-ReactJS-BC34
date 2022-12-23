@@ -16,10 +16,9 @@ function App() {
       <HistoryRouter history={history}>
         <Routes>
             <Route>
-            <Route path="/login" element={<LogIn/>}>
-            <Route  element={<Register/>}/> 
+              <Route path="login" element={<LogIn/>}></Route>
+              <Route  path="Register" element={<Register/>}/> 
             </Route>
-          </Route>
           <Route path="/" element={<TrangChu />}>
             <Route path="/" element={<IndexCyberbugs />} />
             <Route path="/createproject" element={<CreateProject />} />
