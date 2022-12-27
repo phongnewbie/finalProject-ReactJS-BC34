@@ -13,11 +13,15 @@ import Register from "./Info/Account/Register";
 import TrangChu from "./templates/trangChu/TrangChu";
 import IndexCyberbugs from "./components/Cyberbugs/IndexCyberbugs";
 import CreateProject from "./pages/CyberBugs/CreateProject/CreateProject";
+import ProjectManagement from "./pages/CyberBugs/ProjectManagement/ProjectManagement";
+import FormEditProject from "./components/Forms/FormEditProject";
+import DrawerCyber from "./HOC/DrawerCyber";
 
 function App() {
   return (
     <div className="App">
       <HistoryRouter history={history}>
+        <DrawerCyber />
         <Routes>
           <Route>
             <Route path="/login" element={<LogIn />}>
@@ -27,6 +31,8 @@ function App() {
           <Route path="/" element={<TrangChu />}>
             <Route path="/" element={<IndexCyberbugs />} />
             <Route path="/createproject" element={<CreateProject />} />
+            <Route path="/projectmanagement" element={<ProjectManagement />} />
+            <Route path="/formeditproject" element={<FormEditProject />} />
           </Route>
         </Routes>
       </HistoryRouter>

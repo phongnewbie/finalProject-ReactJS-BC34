@@ -1,8 +1,19 @@
 //redux toolkit
 import { configureStore } from "@reduxjs/toolkit";
+import proJectCategoryReducer from "./reducers/projectCategoryReducer/proJectCategoryReducer";
+import projectCyberBugsReducer from "./reducers/projectCyberBugsReducer";
+import drawerCyberbugs from "./reducers/drawerCyberbugs";
+import drawerCyberReducer from "./reducers/drawerCyberReducer";
+import projectReducer from "./reducers/projectReducer";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    proJectCategoryReducer,
+    projectCyberBugsReducer,
+    drawerCyberbugs,
+    drawerCyberReducer,
+    projectReducer,
+  },
 });
 
 //redux
