@@ -7,7 +7,7 @@ import { USER_LOGIN } from "../../utils/constant";
 import { getStringLocal } from "../../utils/config";
 import "../../components/LayOut/main.css";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import Register from "./Register";
 import { callSignIn } from "../../reducer/userReducer/userReducer";
 
 export default function LogIn() {

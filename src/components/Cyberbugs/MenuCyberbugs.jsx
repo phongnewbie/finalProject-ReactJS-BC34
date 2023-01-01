@@ -8,11 +8,14 @@ export default function MenuCyberbugs() {
           <img src={require("../../assets/img/download.jfif")} alt="" />
         </div>
         <div className="account-info">
-          <p>CyberLearn.vn</p>
-          <p>Report bugs</p>
+          <p>Jira</p>
         </div>
       </div>
-      <div className="control">
+    </div>
+  );
+}
+
+{/* <div className="control">
         <div>
           <i className="fa fa-credit-card" />
           <span>Cyber Board</span>
@@ -43,7 +46,4 @@ export default function MenuCyberbugs() {
           <i className="fa fa-box" />
           <span>Components</span>
         </div>
-      </div>
-    </div>
-  );
-}
+      </div> */}

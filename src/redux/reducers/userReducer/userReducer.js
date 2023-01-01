@@ -38,7 +38,7 @@ export const callSignUp = (signUpInfo) => async (dispatch) => {
     alert("Đăng ký thành công");
     history.push("/login");
   } catch (err) {
-    alert("Hong đăng ký được");
+    alert("Tai khoan da ton tai");
   }
 };
 export const callSignIn = (signInInfo) => async (dispatch) => {
