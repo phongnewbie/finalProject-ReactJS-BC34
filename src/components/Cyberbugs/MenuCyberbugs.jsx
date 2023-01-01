@@ -16,13 +16,13 @@ export default function MenuCyberbugs() {
       <div className="control">
         <div>
           <i className="mr-1 fa fa-credit-card" />
-          <NavLink className="text-dark" to="/">
+          <NavLink className="text-dark" to="/indexcyberbugs">
             Cyber Board
           </NavLink>
         </div>
         <div>
           <i className="mr-1 fa fa-cog" />
-          <NavLink className="text-dark" to="/projectmanagement">
+          <NavLink className="text-dark" to="/">
             Project management
           </NavLink>
         </div>

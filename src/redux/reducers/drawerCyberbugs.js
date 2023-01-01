@@ -3,7 +3,11 @@ import FormEditProject from "../../components/Forms/FormEditProject";
 
 const initialState = {
   visible: false,
+  title: "",
   compomenContentDrawer: <p>default</p>,
+  callBackSubmit: (propsValue) => {
+    alert("click demo!");
+  },
 };
 
 const drawerCyberbugs = createSlice({
@@ -20,11 +24,25 @@ const drawerCyberbugs = createSlice({
       //   state.visible = true;
       state.compomenContentDrawer = payload;
     },
+    titleName: (state, { type, payload }) => {
+      //   state.visible = true;
+      state.title = payload;
+    },
+    setCallBackSubmit: (state, { type, payload }) => {
+      //   state.visible = true;
+      state.callBackSubmit = payload;
+    },
   },
 });
 
-export const { openVisible, closeVisible, openForm, setSubmitEdit } =
-  drawerCyberbugs.actions;
+export const {
+  openVisible,
+  closeVisible,
+  openForm,
+  setSubmitEdit,
+  titleName,
+  setCallBackSubmit,
+} = drawerCyberbugs.actions;
 
 export default drawerCyberbugs.reducer;
 

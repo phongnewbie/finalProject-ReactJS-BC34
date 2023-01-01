@@ -17,7 +17,7 @@ import {
 // const { Option } = Select;
 
 export default function DrawerCyber(props) {
-  const { visible, compomenContentDrawer, callBackSubmit } = useSelector(
+  const { visible, compomenContentDrawer, callBackSubmit, title } = useSelector(
     (state) => state.drawerCyberbugs
   );
 
@@ -35,7 +35,7 @@ export default function DrawerCyber(props) {
         New account
       </Button> */}
       <Drawer
-        title="Create a new account"
+        title={title}
         width={720}
         onClose={onClose}
         open={visible}

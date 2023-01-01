@@ -5,6 +5,11 @@ import projectCyberBugsReducer from "./reducers/projectCyberBugsReducer";
 import drawerCyberbugs from "./reducers/drawerCyberbugs";
 import drawerCyberReducer from "./reducers/drawerCyberReducer";
 import projectReducer from "./reducers/projectReducer";
+import userReducer from "./reducers/userReducer/userReducer";
+import taskTypeReducer from "./reducers/taskTypeReducer";
+import priorityReducer from "./reducers/priorityReducer";
+import statusReducer from "./reducers/statusReducer";
+import taskDetailReducer from "./reducers/taskDetailReducer";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +18,11 @@ export const store = configureStore({
     drawerCyberbugs,
     drawerCyberReducer,
     projectReducer,
+    userReducer,
+    taskTypeReducer,
+    priorityReducer,
+    statusReducer,
+    taskDetailReducer,
   },
 });
 

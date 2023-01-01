@@ -1,9 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { http } from "../../utils/baseUrl";
 import { history } from "../../utils/history";
+import { closeVisible } from "./drawerCyberbugs";
 
 const initialState = {
   projectList: [],
+  userProject: {},
+  projectDetail: {},
+  createTask: {},
 };
 
 const projectCyberBugsReducer = createSlice({
@@ -13,10 +17,24 @@ const projectCyberBugsReducer = createSlice({
     getProjectList: (state, { type, payload }) => {
       state.projectList = payload;
     },
+    getUserProjectt: (state, { type, payload }) => {
+      state.userProject = payload;
+    },
+    getProjectDetail: (state, { type, payload }) => {
+      state.projectDetail = payload;
+    },
+    getCreateTask: (state, { type, payload }) => {
+      state.projectDetail = payload;
+    },
   },
 });
 
-export const { getProjectList } = projectCyberBugsReducer.actions;
+export const {
+  getProjectList,
+  getUserProjectt,
+  getProjectDetail,
+  getCreateTask,
+} = projectCyberBugsReducer.actions;
 
 export default projectCyberBugsReducer.reducer;
 
@@ -41,3 +59,41 @@ export const callDeleteProject = (values) => async (dispatch) => {
     console.log("lỗi", err.response?.data);
   }
 };
+
+export const callDeleteUserProject = (user) => async (dispatch) => {
+  try {
+    const apiDeleteUserProject = await http.post(
+      "/Project/removeUserFromProject",
+      user
+    );
+    const apiProjectList = await http.get("/Project/getAllProject");
+    dispatch(getProjectList(apiProjectList.data.content));
+    dispatch(getUserProjectt(apiDeleteUserProject));
+  } catch (err) {
+    console.log(err.response?.data);
+  }
+};
+
+export const callCreateTask = (taskOpject) => async (dispatch) => {
+  try {
+    const apiCreateTask = await http.post("/Project/createTask", taskOpject);
+    console.log(apiCreateTask.data.content);
+    dispatch(getCreateTask(apiCreateTask.data.content));
+    dispatch(closeVisible());
+    alert("Create task successfulty !");
+  } catch (err) {
+    console.log(err.response?.data);
+  }
+};
+
+// export const callGetProjectDetail = (projectId) => async (dispatch) => {
+//   try {
+//     const apigetProjectDetail = await http.get(
+//       `/Project/getProjectDetail?id=${projectId}`
+//     );
+//     dispatch(getProjectDetail(apigetProjectDetail.data.content));
+//   } catch (err) {
+//     console.log(err.response?.data);
+//     history.push("/projectmanagement");
+//   }
+// };

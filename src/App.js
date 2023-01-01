@@ -29,9 +29,10 @@ function App() {
             </Route>
           </Route>
           <Route path="/" element={<TrangChu />}>
-            <Route path="/" element={<IndexCyberbugs />} />
+            <Route path="/" element={<ProjectManagement />} />
+            <Route path="/indexcyberbugs" element={<IndexCyberbugs />} />
+            <Route path="/projectdetail/:id" element={<IndexCyberbugs />} />
             <Route path="/createproject" element={<CreateProject />} />
-            <Route path="/projectmanagement" element={<ProjectManagement />} />
             <Route path="/formeditproject" element={<FormEditProject />} />
           </Route>
         </Routes>
