@@ -10,6 +10,14 @@ import {
 } from "@ant-design/icons";
 import { NavLink, Outlet, redirect, useNavigate } from "react-router-dom";
 import { Layout, Menu, theme } from "antd";
+import {
+  openVisible,
+  closeVisible,
+  openForm,
+  titleName,
+} from "../../redux/reducers/drawerCyberbugs";
+import { useDispatch, useSelector } from "react-redux";
+import FormCreateTask from "../Forms/FormCreateTask";
 
 const { Header, Sider, Content } = Layout;
 function getItem(label, key, icon, children) {
@@ -21,22 +29,61 @@ function getItem(label, key, icon, children) {
   };
 }
 
-const items = [
-  //   <NavLink to="/films"></NavLink>,
-  // getItem(<NavLink to="films">Quản lý phim</NavLink>, <PieChartOutlined />),
-  // getItem("Phim", "sub1", <UserOutlined />, [
-  //   getItem(<NavLink to="films">Quản lý phim</NavLink>),
-  //   getItem(<NavLink to="addnew">Thêm phim</NavLink>),
-  // ]),
-  // getItem("User", "sub2", <UserOutlined />, [
-  //   getItem(<NavLink to="quanly">Quản lý người dùng</NavLink>),
-  //   getItem(<NavLink to="adduser">Thêm người dùng</NavLink>),
-  // ]),
-  getItem("Search", "1", <SearchOutlined />),
-  getItem("Create issue", "2", <PlusOutlined />),
-];
+// const items = [
+//   //   <NavLink to="/films"></NavLink>,
+//   // getItem(<NavLink to="films">Quản lý phim</NavLink>, <PieChartOutlined />),
+//   // getItem("Phim", "sub1", <UserOutlined />, [
+//   //   getItem(<NavLink to="films">Quản lý phim</NavLink>),
+//   //   getItem(<NavLink to="addnew">Thêm phim</NavLink>),
+//   // ]),
+//   // getItem("User", "sub2", <UserOutlined />, [
+//   //   getItem(<NavLink to="quanly">Quản lý người dùng</NavLink>),
+//   //   getItem(<NavLink to="adduser">Thêm người dùng</NavLink>),
+//   // ]),
+//   getItem("Search", "1", <SearchOutlined />),
+//   getItem(
+//     "Create Task",
+//     "2",
+//     <button
+//       onClick={() => {
+//         useDispatch(openVisible(), openForm());
+//       }}
+//     >
+//       <PlusOutlined />
+//     </button>
+//   ),
+// ];
 
 export default function SiderBar() {
+  const dispatch = useDispatch();
+
+  const items = [
+    //   <NavLink to="/films"></NavLink>,
+    // getItem(<NavLink to="films">Quản lý phim</NavLink>, <PieChartOutlined />),
+    // getItem("Phim", "sub1", <UserOutlined />, [
+    //   getItem(<NavLink to="films">Quản lý phim</NavLink>),
+    //   getItem(<NavLink to="addnew">Thêm phim</NavLink>),
+    // ]),
+    // getItem("User", "sub2", <UserOutlined />, [
+    //   getItem(<NavLink to="quanly">Quản lý người dùng</NavLink>),
+    //   getItem(<NavLink to="adduser">Thêm người dùng</NavLink>),
+    // ]),
+    getItem("Search", "1", <SearchOutlined />),
+    getItem(
+      "Create Task",
+      "2",
+      <NavLink
+        onClick={() => {
+          dispatch(openForm(<FormCreateTask />));
+          dispatch(openVisible());
+          dispatch(titleName("Create Task"));
+        }}
+      >
+        <PlusOutlined />
+      </NavLink>
+    ),
+  ];
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },

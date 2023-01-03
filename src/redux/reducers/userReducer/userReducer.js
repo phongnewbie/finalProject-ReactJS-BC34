@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { http } from "../../../utils/baseUrl";
 import { history } from "../../../utils/history";
 import { USER_LOGIN } from "../../../utils/constant";
+import { getProjectList } from "../projectCyberBugsReducer";
 
 import {
   getStringLocal,
@@ -9,27 +10,39 @@ import {
   removeLocal,
 } from "../../../utils/config";
 const initialState = {
-  accountInfo: {},
+  arrUser: [],
+  userSearch: [],
+  arrUserSearch: [],
+  assignUser: {},
 };
 
 const userReducer = createSlice({
   name: "userReducer",
   initialState,
   reducers: {
-    getAccount: (state, { type, payload }) => {
-      state.accountInfo = payload;
+    getArrUser: (state, { type, payload }) => {
+      state.arrUser = payload;
+    },
+    getUserSearch: (state, { type, payload }) => {
+      state.userSearch = payload;
+    },
+    getUserByProjectId: (state, { type, payload }) => {
+      state.arrUserSearch = payload;
+    },
+    getAssignUser: (state, { type, payload }) => {
+      state.assignUser = payload;
     },
   },
 });
-export const { getAccount } = userReducer.actions;
+export const { getArrUser, getUserSearch, getAssignUser, getUserByProjectId } =
+  userReducer.actions;
 export default userReducer.reducer;
-export const getAccountInfo = async (dispatch) => {
+export const callArrUser = () => async (dispatch) => {
   try {
-    const getApiUser = await http.post("/api/Users/getUser");
-    dispatch(getAccount(getApiUser.data.content));
+    const getApiUser = await http.post("/Users/getUser");
+    dispatch(getArrUser(getApiUser.data.content));
   } catch (err) {
-    console.log(err);
-    removeLocal(USER_LOGIN);
+    console.log("lỗi user", err.response?.data);
   }
 };
 export const callSignUp = (signUpInfo) => async (dispatch) => {
@@ -49,5 +62,40 @@ export const callSignIn = (signInInfo) => async (dispatch) => {
     return new Promise((resolve, reject) =>
       resolve({ isError: true, message: err.response.data.content })
     );
+  }
+};
+
+export const callGetUser = (value) => async (dispatch) => {
+  try {
+    const getUser = await http.get(`/Users/getUser?keyword=${value}`);
+    dispatch(getUserSearch(getUser.data.content));
+  } catch (err) {
+    console.log("lỗi", err.response?.data);
+  }
+};
+
+export const callAssignUser = (value) => async (dispatch) => {
+  try {
+    const getAssignUser = await http.post("/Project/assignUserProject", value);
+
+    const apiProjectList = await http.get("/Project/getAllProject");
+
+    dispatch(getProjectList(apiProjectList.data.content));
+    dispatch(getAssignUser(getAssignUser));
+  } catch (err) {
+    console.log("lỗi data", err.response?.data);
+  }
+};
+
+export const callUserByProjectId = (id) => async (dispatch) => {
+  try {
+    const apiUserByProjectId = await http.get(
+      `/Users/getUserByProjectId?idProject=${id}`
+    );
+    console.log(apiUserByProjectId);
+    dispatch(getUserByProjectId(apiUserByProjectId.data.content));
+  } catch (err) {
+    console.log("lỗi ByProjectId", err.response?.data);
+    // dispatch(getUserByProjectId([]));
   }
 };

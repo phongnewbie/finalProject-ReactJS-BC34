@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { openVisible, closeVisible } from "../redux/reducers/drawerCyberbugs";
+import { setUpdate } from "../redux/reducers/drawerCyberbugs";
 import {
   Button,
   Col,
@@ -17,7 +18,7 @@ import {
 // const { Option } = Select;
 
 export default function DrawerCyber(props) {
-  const { visible, compomenContentDrawer, callBackSubmit } = useSelector(
+  const { visible, compomenContentDrawer, callBackSubmit, title } = useSelector(
     (state) => state.drawerCyberbugs
   );
 
@@ -29,13 +30,16 @@ export default function DrawerCyber(props) {
   const onClose = () => {
     dispatch(closeVisible());
   };
+  const updateInfo = () => {
+    console.log("update success");
+  };
   return (
     <>
       {/* <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
         New account
       </Button> */}
       <Drawer
-        title="Create a new account"
+        title={title}
         width={720}
         onClose={onClose}
         open={visible}
@@ -48,6 +52,7 @@ export default function DrawerCyber(props) {
             <Button onClick={callBackSubmit} type="primary">
               Submit
             </Button>
+            <Button onClick={updateInfo}>Update</Button>
           </Space>
         }
       >

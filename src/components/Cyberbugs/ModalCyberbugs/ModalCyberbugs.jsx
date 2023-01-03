@@ -1,6 +1,66 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
+import parse from "html-react-parser";
+import { callArrStatus } from "../../../redux/reducers/statusReducer";
+import { callgetPriority } from "../../../redux/reducers/priorityReducer";
+import { callTaskDetail } from "../../../redux/reducers/taskDetailReducer";
 
-export default function ModalCyberbugs() {
+export default function ModalCyberbugs(props) {
+  const dispatch = useDispatch();
+  const { taskDetail } = useSelector((state) => state.taskDetailReducer);
+  const { arrStatus } = useSelector((state) => state.statusReducer);
+  const { arrPriority } = useSelector((state) => state.priorityReducer);
+
+  console.log("taskDetail", taskDetail);
+
+  useEffect(() => {
+    // dispatch(callTaskDetail());
+    dispatch(callArrStatus());
+    dispatch(callgetPriority());
+  }, []);
+
+  const renderDescription = () => {
+    const jsxDescription = parse(taskDetail?.description);
+    return jsxDescription;
+  };
+
+  const renderTimeTracking = () => {
+    const { originalEstimate, timeTrackingSpent, timeTrackingRemaining } =
+      taskDetail;
+
+    const max = Number(timeTrackingSpent) + Number(timeTrackingRemaining);
+    const percent = Math.round((Number(timeTrackingSpent) / max) * 100);
+    return (
+      <div style={{ display: "flex" }}>
+        <i className="fa fa-clock" />
+        <div style={{ width: "100%" }}>
+          <div className="progress">
+            <div
+              className="progress-bar"
+              role="progressbar"
+              style={{ width: `${percent}%` }}
+              aria-valuenow={Number(timeTrackingSpent)}
+              aria-valuemin={Number(timeTrackingRemaining)}
+              aria-valuemax={max}
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "6px",
+            }}
+          >
+            <p className="logged">{Number(timeTrackingSpent)}h logged</p>
+            <p className="estimate-time">
+              {Number(timeTrackingRemaining)}h remaining
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <div
@@ -56,7 +116,7 @@ export default function ModalCyberbugs() {
             <div className="modal-header">
               <div className="task-title">
                 <i className="fa fa-bookmark" />
-                <span>TASK-217871</span>
+                <span>{taskDetail?.taskName}</span>
               </div>
               <div style={{ display: "flex" }} className="task-click">
                 <div>
@@ -85,20 +145,9 @@ export default function ModalCyberbugs() {
                     <p className="issue">This is an issue of type: Task.</p>
                     <div className="description">
                       <p>Description</p>
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Esse expedita quis vero tempora error sed
-                        reprehenderit sequi laborum, repellendus quod laudantium
-                        tenetur nobis modi reiciendis sint architecto. Autem
-                        libero quibusdam odit assumenda fugiat? Beatae aliquid
-                        labore vitae obcaecati sapiente asperiores quia amet id
-                        aut, natus quo molestiae quod voluptas, temporibus iusto
-                        laudantium sit tempora sequi. Rem, itaque id, fugit
-                        magnam asperiores voluptas consectetur aliquid vel error
-                        illum, delectus eum eveniet laudantium at repudiandae!
-                      </p>
+                      {renderDescription()}
                     </div>
-                    <div style={{ fontWeight: 500, marginBottom: 10 }}>
+                    {/* <div style={{ fontWeight: 500, marginBottom: 10 }}>
                       Jira Software (software projects) issue types:
                     </div>
                     <div className="title">
@@ -126,7 +175,7 @@ export default function ModalCyberbugs() {
                         </h3>
                         <p>A task represents work that needs to be done</p>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="comment">
                       <h6>Comment</h6>
                       <div
@@ -196,31 +245,44 @@ export default function ModalCyberbugs() {
                   <div className="col-4">
                     <div className="status">
                       <h6>STATUS</h6>
-                      <select className="custom-select">
-                        <option value={""}>SELECTED FOR DEVELOPMENT</option>
-                        <option value={1}>One</option>
-                        <option value={2}>Two</option>
-                        <option value={3}>Three</option>
+                      <select
+                        className="custom-select"
+                        value={taskDetail?.statusId}
+                        onChange={(e) => {}}
+                      >
+                        {arrStatus?.map((status, index) => {
+                          return (
+                            <option key={index} value={status.statusId}>
+                              {status.statusName}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="assignees">
                       <h6>ASSIGNEES</h6>
                       <div style={{ display: "flex" }}>
-                        <div style={{ display: "flex" }} className="item">
-                          <div className="avatar">
-                            <img
-                              src={require("../../../assets/img/download (1).jfif")}
-                              alt="1"
-                            />
-                          </div>
-                          <p className="name">
-                            Pickle Rick
-                            <i
-                              className="fa fa-times"
-                              style={{ marginLeft: 5 }}
-                            />
-                          </p>
-                        </div>
+                        {taskDetail?.assigness.map((user, index) => {
+                          return (
+                            <div
+                              key={index}
+                              style={{ display: "flex" }}
+                              className="item"
+                            >
+                              <div className="avatar">
+                                <img src={user.avatar} alt={user.avatar} />
+                              </div>
+                              <p className="name mt-1 ml-1">
+                                {user.name}
+                                <i
+                                  className="fa fa-times"
+                                  style={{ marginLeft: 5 }}
+                                />
+                              </p>
+                            </div>
+                          );
+                        })}
+
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <i
                             className="fa fa-plus"
@@ -230,63 +292,34 @@ export default function ModalCyberbugs() {
                         </div>
                       </div>
                     </div>
-                    <div className="reporter">
-                      <h6>REPORTER</h6>
-                      <div style={{ display: "flex" }} className="item">
-                        <div className="avatar">
-                          <img
-                            src={require("../../../assets/img/download (1).jfif")}
-                            alt="1"
-                          />
-                        </div>
-                        <p className="name">
-                          Pickle Rick
-                          <i
-                            className="fa fa-times"
-                            style={{ marginLeft: 5 }}
-                          />
-                        </p>
-                      </div>
-                    </div>
-                    <div className="priority" style={{ marginBottom: 20 }}>
+
+                    <div className="priority mt-3" style={{ marginBottom: 20 }}>
                       <h6>PRIORITY</h6>
-                      <select>
-                        <option>Highest</option>
-                        <option>Medium</option>
-                        <option>Low</option>
-                        <option>Lowest</option>
+                      <select
+                        className="form-control"
+                        value={taskDetail?.priorityTask?.priorityId}
+                        onChange={(e) => {}}
+                      >
+                        {arrPriority?.map((priority, index) => {
+                          return (
+                            <option key={index} value={priority.priorityId}>
+                              {priority.priority}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                     <div className="estimate">
                       <h6>ORIGINAL ESTIMATE (HOURS)</h6>
-                      <input type="text" className="estimate-hours" />
+                      <input
+                        type="text"
+                        className="estimate-hours"
+                        value={taskDetail?.originalEstimate}
+                      />
                     </div>
                     <div className="time-tracking">
                       <h6>TIME TRACKING</h6>
-                      <div style={{ display: "flex" }}>
-                        <i className="fa fa-clock" />
-                        <div style={{ width: "100%" }}>
-                          <div className="progress">
-                            <div
-                              className="progress-bar"
-                              role="progressbar"
-                              style={{ width: "25%" }}
-                              aria-valuenow={25}
-                              aria-valuemin={0}
-                              aria-valuemax={100}
-                            />
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                            }}
-                          >
-                            <p className="logged">4h logged</p>
-                            <p className="estimate-time">12h estimated</p>
-                          </div>
-                        </div>
-                      </div>
+                      {renderTimeTracking()}
                     </div>
                     <div style={{ color: "#929398" }}>
                       Create at a month ago

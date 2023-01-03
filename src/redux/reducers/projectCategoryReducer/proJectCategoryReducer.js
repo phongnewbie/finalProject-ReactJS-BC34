@@ -36,7 +36,7 @@ export const callcreateProject = (values) => async (dispatch) => {
       values
     );
     alert("Đăng ký thành công");
-    history.push("/projectmanagement");
+    history.push("/");
   } catch (err) {
     alert("Bạn cần đăng nhập đễ tạo Project");
     history.push("/login");
