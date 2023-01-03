@@ -16,11 +16,11 @@ export default function IndexCyberbugs(props) {
       `/Project/getProjectDetail?id=${params.id}`
     );
     setState(apigetProjectDetail.data.content);
-    console.log("projectId", apigetProjectDetail.data.content);
   };
 
   useEffect(() => {
     getApiChiTiet();
+
     window.scrollTo(0, 0);
   }, [params.id]);
 

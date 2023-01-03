@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { callTaskDetail } from "../../../redux/reducers/taskDetailReducer";
+import { getProjectDetail } from "../../../redux/reducers/projectCyberBugsReducer";
 
 export default function ContentMain(props) {
   const dispatch = useDispatch();
   const { projectDetail } = props;
+
+  useEffect(() => {
+    dispatch(getProjectDetail(projectDetail));
+  }, [projectDetail]);
 
   const taskColor = (color) => {
     if (color == "High") {

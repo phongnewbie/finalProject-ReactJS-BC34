@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { http } from "../../utils/baseUrl";
+import { closeVisible } from "./drawerCyberbugs";
+import { history } from "../../utils/history";
+import { getProjectDetail } from "./projectCyberBugsReducer";
 
 const initialState = {
   taskDetail: {
@@ -48,10 +51,34 @@ const taskDetailReducer = createSlice({
     getTaskDetail: (state, { type, payload }) => {
       state.taskDetail = payload;
     },
+    getTaskModal: (state, { type, payload }) => {
+      const { name, value } = payload;
+      state.taskDetail = { ...state.taskDetail, [name]: value };
+    },
+    getAssigness: (state, { type, payload }) => {
+      state.taskDetail.assigness = [...state.taskDetail.assigness, payload];
+    },
+    getTaskDetailDelete: (state, { type, payload }) => {
+      state.taskDetail.assigness = state.taskDetail.assigness.filter(
+        (us) => us.id != payload
+      );
+    },
+    getUpdateTask: (state, { type, payload }) => {
+      const listUserAsign = state.taskDetail.assigness?.map((user, index) => {
+        return user.id;
+      });
+      state.taskDetail = { ...payload, listUserAsign };
+    },
   },
 });
 
-export const { getTaskDetail } = taskDetailReducer.actions;
+export const {
+  getTaskDetail,
+  getTaskModal,
+  getAssigness,
+  getTaskDetailDelete,
+  getUpdateTask,
+} = taskDetailReducer.actions;
 
 export default taskDetailReducer.reducer;
 
@@ -60,8 +87,31 @@ export const callTaskDetail = (taskId) => async (dispatch) => {
     const apiTaskDetail = await http.get(
       `/Project/getTaskDetail?taskId=${taskId}`
     );
+    // console.log("getTaskDetail", apiTaskDetail.data.content);
     dispatch(getTaskDetail(apiTaskDetail.data.content));
   } catch (err) {
     console.log("lỗi TaskDetail", err.response?.data);
+  }
+};
+
+export const callTaskModal = (taskId) => async (dispatch) => {
+  try {
+    const apiTaskModal = await http.put("/Project/updateTask", taskId);
+    dispatch(getTaskModal());
+  } catch (err) {
+    console.log("lỗi TaskDetail", err.response?.data);
+  }
+};
+
+export const callUpdateTask = (taskUpdate) => async (dispatch) => {
+  try {
+    const apiUpdateTask = await http.post("/Project/updateTask", taskUpdate);
+
+    dispatch(getProjectDetail(taskUpdate));
+    window.location.reload(getProjectDetail(taskUpdate));
+
+    console.log();
+  } catch (err) {
+    console.log("lỗi updateTask", err.response?.data);
   }
 };

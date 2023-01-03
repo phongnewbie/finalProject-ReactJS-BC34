@@ -28,7 +28,7 @@ export default projectReducer.reducer;
 export const callEditProject = (values) => async (dispatch) => {
   try {
     const apiEditProject = await http.put(
-      `/Project/updateProject?projectId=${values.id}`
+      `/Project/updateProject?projectId=${values}`
     );
     dispatch(editProjact(apiEditProject.data.content));
     console.log("gogogo", apiEditProject());

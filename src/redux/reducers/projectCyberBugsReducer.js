@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import React, { useState, useEffect } from "react";
+
 import { http } from "../../utils/baseUrl";
 import { history } from "../../utils/history";
 import { closeVisible } from "./drawerCyberbugs";
@@ -86,14 +88,15 @@ export const callCreateTask = (taskOpject) => async (dispatch) => {
   }
 };
 
-// export const callGetProjectDetail = (projectId) => async (dispatch) => {
-//   try {
-//     const apigetProjectDetail = await http.get(
-//       `/Project/getProjectDetail?id=${projectId}`
-//     );
-//     dispatch(getProjectDetail(apigetProjectDetail.data.content));
-//   } catch (err) {
-//     console.log(err.response?.data);
-//     history.push("/projectmanagement");
-//   }
-// };
+export const callGetProjectDetail = (projectId) => async (dispatch) => {
+  try {
+    const apigetProjectDetail = await http.get(
+      `/Project/getProjectDetail?id=${projectId}`
+    );
+
+    dispatch(getProjectDetail(apigetProjectDetail.data.content));
+  } catch (err) {
+    console.log(err.response?.data);
+    history.push("/");
+  }
+};

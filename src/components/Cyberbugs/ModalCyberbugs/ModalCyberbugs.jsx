@@ -1,27 +1,188 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import parse from "html-react-parser";
+import { useFormik } from "formik";
+
+import { Editor } from "@tinymce/tinymce-react";
+import { Select, Form } from "antd";
 import { callArrStatus } from "../../../redux/reducers/statusReducer";
 import { callgetPriority } from "../../../redux/reducers/priorityReducer";
-import { callTaskDetail } from "../../../redux/reducers/taskDetailReducer";
+import { callTaskTypeProjact } from "../../../redux/reducers/taskTypeReducer";
+import { callUpdateStatus } from "../../../redux/reducers/updateProject/updateProjectReducer";
+import {
+  callTaskDetail,
+  callUpdateTask,
+} from "../../../redux/reducers/taskDetailReducer";
+import {
+  callTaskModal,
+  getTaskModal,
+  getAssigness,
+  getTaskDetailDelete,
+  getUpdateTask,
+} from "../../../redux/reducers/taskDetailReducer";
 
 export default function ModalCyberbugs(props) {
   const dispatch = useDispatch();
   const { taskDetail } = useSelector((state) => state.taskDetailReducer);
   const { arrStatus } = useSelector((state) => state.statusReducer);
   const { arrPriority } = useSelector((state) => state.priorityReducer);
+  const { arrTaskType } = useSelector((state) => state.taskTypeReducer);
+  const { projectDetail } = useSelector(
+    (state) => state.projectCyberBugsReducer
+  );
 
-  console.log("taskDetail", taskDetail);
+  // console.log("taskDetail", taskDetail);
+  // console.log("projectDetail", projectDetail);
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      // listUserAsign: [0],
+      // taskId: taskDetail.taskId,
+      // taskName: taskDetail.taskName,
+      // description: taskDetail.description,
+      // statusId: taskDetail.statusId,
+      // originalEstimate: taskDetail.originalEstimate,
+      // timeTrackingSpent: taskDetail.timeTrackingSpent,
+      // timeTrackingRemaining: taskDetail.timeTrackingRemaining,
+      // projectId: taskDetail.projectId,
+      // typeId: taskDetail.typeId,
+      // priorityId: taskDetail.priorityId,
+
+      priorityTask: taskDetail.priorityTask,
+      taskTypeDetail: taskDetail.taskTypeDetail,
+      assigness: taskDetail.assigness,
+      lstComment: taskDetail.lstComment,
+      taskId: taskDetail.taskId,
+      taskName: taskDetail.taskName,
+      alias: taskDetail.alias,
+      description: taskDetail.description,
+      statusId: taskDetail.statusId,
+      originalEstimate: taskDetail.originalEstimate,
+      timeTrackingSpent: taskDetail.timeTrackingSpent,
+      timeTrackingRemaining: taskDetail.timeTrackingRemaining,
+      typeId: taskDetail.typeId,
+      priorityId: taskDetail.priorityId,
+      projectId: taskDetail.projectId,
+
+      alias: projectDetail.alias,
+      creator: projectDetail.creator,
+      descriptiont: projectDetail.description,
+      lstTask: projectDetail.lstTask,
+      members: projectDetail.members,
+      projectCategory: projectDetail.projectCategory,
+      projectName: projectDetail.projectName,
+    },
+    onSubmit: (values) => {
+      console.log("value", values);
+      values.listUserAsign = taskDetail.assigness?.map((user, index) => {
+        return user.id;
+      });
+
+      dispatch(callUpdateTask(values));
+
+      // const getApiChiTiet = async () => {
+      //   await window.location.reload(projectDetail);
+      // };
+      // setTimeout(() => {
+      //   getApiChiTiet();
+      // }, 500);
+    },
+  });
 
   useEffect(() => {
     // dispatch(callTaskDetail());
     dispatch(callArrStatus());
     dispatch(callgetPriority());
+    dispatch(callTaskTypeProjact());
   }, []);
+
+  const [visibleEditer, setVisibleEditer] = useState(false);
+  const [historyContent, setHistoryContent] = useState(taskDetail.description);
+  const [content, setContent] = useState(taskDetail.description);
 
   const renderDescription = () => {
     const jsxDescription = parse(taskDetail?.description);
-    return jsxDescription;
+    return (
+      <div>
+        {visibleEditer ? (
+          <div>
+            <Editor
+              name="description"
+              // onInit={(evt, editor) => (editorRef.current = editor)}
+              initialValue={taskDetail.description}
+              init={{
+                height: 350,
+                menubar: false,
+                plugins: [
+                  "advlist autolink lists link image charmap print preview anchor",
+                  "searchreplace visualblocks code fullscreen",
+                  "insertdatetime media table paste code help wordcount",
+                ],
+                toolbar:
+                  "undo redo | formatselect | " +
+                  "bold italic backcolor | alignleft aligncenter " +
+                  "alignright alignjustify | bullist numlist outdent indent | " +
+                  "removeformat | help",
+                content_style:
+                  "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+              }}
+              onEditorChange={(content, editor) => {
+                setContent(content);
+              }}
+            />
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                dispatch(
+                  getTaskModal({
+                    name: "description",
+                    value: content,
+                  })
+                );
+                setVisibleEditer(false);
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                // setHistoryContent(taskDetail.description);
+                setVisibleEditer(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              setVisibleEditer(!visibleEditer);
+            }}
+          >
+            {jsxDescription}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const handleChangeTh = (e) => {
+    const { name, value } = e.target;
+
+    dispatch(
+      getTaskModal({
+        name,
+        value,
+      })
+    );
+  };
+
+  const [componentSize, setComponentSize] = useState("default");
+  const [component, setComponent] = useState(0);
+  const onFormLayoutChange = ({ size }) => {
+    setComponentSize(size);
   };
 
   const renderTimeTracking = () => {
@@ -31,30 +192,48 @@ export default function ModalCyberbugs(props) {
     const max = Number(timeTrackingSpent) + Number(timeTrackingRemaining);
     const percent = Math.round((Number(timeTrackingSpent) / max) * 100);
     return (
-      <div style={{ display: "flex" }}>
-        <i className="fa fa-clock" />
-        <div style={{ width: "100%" }}>
-          <div className="progress">
+      <div>
+        <div style={{ display: "flex" }}>
+          <i className="fa fa-clock" />
+          <div style={{ width: "100%" }}>
+            <div className="progress">
+              <div
+                className="progress-bar"
+                role="progressbar"
+                style={{ width: `${percent}%` }}
+                aria-valuenow={Number(timeTrackingSpent)}
+                aria-valuemin={Number(timeTrackingRemaining)}
+                aria-valuemax={max}
+              />
+            </div>
             <div
-              className="progress-bar"
-              role="progressbar"
-              style={{ width: `${percent}%` }}
-              aria-valuenow={Number(timeTrackingSpent)}
-              aria-valuemin={Number(timeTrackingRemaining)}
-              aria-valuemax={max}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "6px",
+              }}
+            >
+              <p className="logged">{Number(timeTrackingSpent)}h logged</p>
+              <p className="estimate-time">
+                {Number(timeTrackingRemaining)}h remaining
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input
+              onChange={handleChangeTh}
+              className="form-control"
+              name="timeTrackingSpent"
             />
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "6px",
-            }}
-          >
-            <p className="logged">{Number(timeTrackingSpent)}h logged</p>
-            <p className="estimate-time">
-              {Number(timeTrackingRemaining)}h remaining
-            </p>
+          <div className="col-6">
+            <input
+              onChange={handleChangeTh}
+              className="form-control"
+              name="timeTrackingRemaining"
+            />
           </div>
         </div>
       </div>
@@ -112,10 +291,31 @@ export default function ModalCyberbugs(props) {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-info">
-          <div className="modal-content">
+          <form
+            onSubmit={formik.handleSubmit}
+            initialValues={{
+              size: componentSize,
+            }}
+            onValuesChange={onFormLayoutChange}
+            size={componentSize}
+            className="modal-content"
+          >
             <div className="modal-header">
               <div className="task-title">
                 <i className="fa fa-bookmark" />
+                <select
+                  name="taskId"
+                  value={taskDetail.taskId}
+                  onChange={handleChangeTh}
+                >
+                  {arrTaskType.map((tp, index) => {
+                    return (
+                      <option key={index} value={tp.id}>
+                        {tp.taskType}
+                      </option>
+                    );
+                  })}
+                </select>
                 <span>{taskDetail?.taskName}</span>
               </div>
               <div style={{ display: "flex" }} className="task-click">
@@ -246,9 +446,19 @@ export default function ModalCyberbugs(props) {
                     <div className="status">
                       <h6>STATUS</h6>
                       <select
+                        name="statusId"
                         className="custom-select"
                         value={taskDetail?.statusId}
-                        onChange={(e) => {}}
+                        onChange={(e) => {
+                          handleChangeTh(e);
+                          // const action = {
+                          //   taskId: taskDetail?.taskId,
+                          //   statusId: e.target.value,
+                          //   projectId: taskDetail.projectId,
+                          // };
+                          // dispatch(callUpdateStatus(action));
+                          // console.log("UpdateStatus", action);
+                        }}
                       >
                         {arrStatus?.map((status, index) => {
                           return (
@@ -261,34 +471,82 @@ export default function ModalCyberbugs(props) {
                     </div>
                     <div className="assignees">
                       <h6>ASSIGNEES</h6>
-                      <div style={{ display: "flex" }}>
+                      <div className="row">
                         {taskDetail?.assigness.map((user, index) => {
                           return (
-                            <div
-                              key={index}
-                              style={{ display: "flex" }}
-                              className="item"
-                            >
-                              <div className="avatar">
-                                <img src={user.avatar} alt={user.avatar} />
-                              </div>
-                              <p className="name mt-1 ml-1">
-                                {user.name}
+                            <div className="col-12 mt-2">
+                              <div
+                                key={index}
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                }}
+                                className="item"
+                              >
+                                <div className="avatar">
+                                  <img src={user.avatar} alt={user.avatar} />
+                                </div>
+                                <p className="name ml-2">{user.name}</p>
                                 <i
                                   className="fa fa-times"
-                                  style={{ marginLeft: 5 }}
+                                  style={{
+                                    marginLeft: "auto",
+                                    marginRight: "4px",
+                                    cursor: "pointer",
+                                  }}
+                                  onClick={() => {
+                                    dispatch(getTaskDetailDelete(user.id));
+                                    // dispatch(getUpdateTask());
+                                  }}
                                 />
-                              </p>
+                              </div>
                             </div>
                           );
                         })}
 
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <i
-                            className="fa fa-plus"
-                            style={{ marginRight: 5 }}
-                          />
-                          <span>Add more</span>
+                        <div className="col-12 mt-2">
+                          {/* <span>Add more</span> */}
+                          <Select
+                            value="+ Add more"
+                            name="lstUser"
+                            optionFilterProp="label"
+                            style={{
+                              width: "100%",
+                            }}
+                            onSelect={(value) => {
+                              // const value = e.target.value;
+                              if (value == "0") {
+                                return;
+                              }
+                              let userSelect = projectDetail.members.find(
+                                (mem) => mem.userId == value
+                              );
+                              userSelect = {
+                                ...userSelect,
+                                id: userSelect.userId,
+                              };
+                              dispatch(getAssigness(userSelect));
+                              // dispatch(getUpdateTask());
+                            }}
+                          >
+                            {projectDetail.members
+                              ?.filter((mem) => {
+                                let index = taskDetail.assigness?.findIndex(
+                                  (us) => us.id === mem.userId
+                                );
+                                if (index !== -1) {
+                                  return false;
+                                }
+                                return true;
+                              })
+                              .map((mem, index) => {
+                                return (
+                                  <option key={index} value={mem.userId}>
+                                    {mem.name}
+                                  </option>
+                                );
+                              })}
+                          </Select>
                         </div>
                       </div>
                     </div>
@@ -296,9 +554,12 @@ export default function ModalCyberbugs(props) {
                     <div className="priority mt-3" style={{ marginBottom: 20 }}>
                       <h6>PRIORITY</h6>
                       <select
+                        name="priorityId"
                         className="form-control"
-                        value={taskDetail?.priorityTask?.priorityId}
-                        onChange={(e) => {}}
+                        value={taskDetail?.priorityId}
+                        onChange={(e) => {
+                          handleChangeTh(e);
+                        }}
                       >
                         {arrPriority?.map((priority, index) => {
                           return (
@@ -312,9 +573,13 @@ export default function ModalCyberbugs(props) {
                     <div className="estimate">
                       <h6>ORIGINAL ESTIMATE (HOURS)</h6>
                       <input
+                        name="originalEstimate"
                         type="text"
                         className="estimate-hours"
                         value={taskDetail?.originalEstimate}
+                        onChange={(e) => {
+                          handleChangeTh(e);
+                        }}
                       />
                     </div>
                     <div className="time-tracking">
@@ -328,10 +593,13 @@ export default function ModalCyberbugs(props) {
                       Update at a few seconds ago
                     </div>
                   </div>
+                  <button className="btn btn-success" type="submit">
+                    Cập nhật
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
