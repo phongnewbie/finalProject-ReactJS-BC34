@@ -110,7 +110,7 @@ function FormEditProject(props) {
             <Editor
               name="description"
               // onInit={(evt, editor) => (editorRef.current = editor)}
-              // initialValue={values.description}
+              initialValue={values.description}
               value={values.description}
               init={{
                 height: 350,

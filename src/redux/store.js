@@ -10,6 +10,7 @@ import taskTypeReducer from "./reducers/taskTypeReducer";
 import priorityReducer from "./reducers/priorityReducer";
 import statusReducer from "./reducers/statusReducer";
 import taskDetailReducer from "./reducers/taskDetailReducer";
+import updateProjectReducer from "./reducers/updateProject/updateProjectReducer";
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     priorityReducer,
     statusReducer,
     taskDetailReducer,
+    updateProjectReducer,
   },
 });
 
