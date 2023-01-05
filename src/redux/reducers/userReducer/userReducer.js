@@ -56,8 +56,8 @@ export const callSignUp = (signUpInfo) => async (dispatch) => {
 };
 export const callSignIn = (signInInfo) => async (dispatch) => {
   try {
-    const signUp = await http.post("/Users/signin", signInInfo);
-    history.push("/singup");
+    const signIn = await http.post("/Users/signin", signInInfo);
+    history.push("/signIn");
   } catch (err) {
     return new Promise((resolve, reject) =>
       resolve({ isError: true, message: err.response.data.content })

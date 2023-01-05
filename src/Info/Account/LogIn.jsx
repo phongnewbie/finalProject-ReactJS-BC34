@@ -8,7 +8,7 @@ import { getStringLocal } from "../../utils/config";
 import "../../components/LayOut/main.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import Register from "./Register";
-import { callSignUp } from "../../reducer/userReducer/userReducer";
+import { callSignIn } from "../../reducer/userReducer/userReducer";
 
 export default function LogIn() {
   const {
@@ -23,7 +23,7 @@ export default function LogIn() {
   const onFinish = async (values) => {
     try {
       let { email, passWord } = values;
-      const result = await dispatch(callSignUp({ email, passWord }));
+      const result = await dispatch(callSignIn({ email, passWord }));
       if (result.isError == true) {
         opentAlertMessage(result.message);
       }
@@ -102,7 +102,7 @@ export default function LogIn() {
                   }}
                 >
                   <span className="login-link">
-                    <NavLink to="Register">Bạn chưa có tài khoản?</NavLink> |
+                    <NavLink to="/Register">Bạn chưa có tài khoản?</NavLink> |
                     {""}
                     <a href="/">Trang Chủ</a>
                   </span>

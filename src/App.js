@@ -24,8 +24,8 @@ function App() {
       <HistoryRouter history={history}>
         <DrawerCyber />
         <Routes>
-          <Route path="/">
-            <Route path="login" element={<LogIn/>}></Route>
+          <Route>
+            <Route path="/login" element={<LogIn/>}></Route>
               <Route path="Register" element={<Register/>} />
             </Route>
           <Route path="/" element={<TrangChu />}>
