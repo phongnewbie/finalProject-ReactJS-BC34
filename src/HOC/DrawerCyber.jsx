@@ -3,6 +3,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { openVisible, closeVisible } from "../redux/reducers/drawerCyberbugs";
 import { setUpdate } from "../redux/reducers/drawerCyberbugs";
+import { callEditProject } from "../redux/reducers/projectReducer";
 import {
   Button,
   Col,
@@ -30,9 +31,7 @@ export default function DrawerCyber(props) {
   const onClose = () => {
     dispatch(closeVisible());
   };
-  const updateInfo = () => {
-    console.log("update success");
-  };
+
   return (
     <>
       {/* <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
@@ -52,7 +51,7 @@ export default function DrawerCyber(props) {
             <Button onClick={callBackSubmit} type="primary">
               Submit
             </Button>
-            <Button onClick={updateInfo}>Update</Button>
+            <Button onClick={callEditProject()}>Update</Button>
           </Space>
         }
       >

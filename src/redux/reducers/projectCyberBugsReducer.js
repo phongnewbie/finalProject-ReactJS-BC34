@@ -28,6 +28,9 @@ const projectCyberBugsReducer = createSlice({
     getCreateTask: (state, { type, payload }) => {
       state.projectDetail = payload;
     },
+    getUpdateProject:(state,{type,payload})=>{
+      state.projectDetail = payload
+    }
   },
 });
 
@@ -36,6 +39,7 @@ export const {
   getUserProjectt,
   getProjectDetail,
   getCreateTask,
+  getUpdateProject,
 } = projectCyberBugsReducer.actions;
 
 export default projectCyberBugsReducer.reducer;

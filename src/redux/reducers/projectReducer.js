@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { http } from "../../utils/baseUrl";
 import { history } from "../../utils/history";
-
+import { getProjectDetail } from "./projectCyberBugsReducer";
 const initialState = {
   projectEdit: {
     id: 0,
@@ -28,7 +28,7 @@ export default projectReducer.reducer;
 export const callEditProject = (values) => async (dispatch) => {
   try {
     const apiEditProject = await http.put(
-      `/Project/updateProject?projectId=${values}`
+      `/api/Project/updateProject?projectId=${values}`
     );
     dispatch(editProjact(apiEditProject.data.content));
     console.log("gogogo", apiEditProject());
@@ -36,6 +36,7 @@ export const callEditProject = (values) => async (dispatch) => {
     console.log("lỗi", err.response?.data);
   }
 };
+
 
 // export const callDeleteProject = (values) => async (dispatch) => {
 //   try {

@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "../../Responsive/responsive.css";
 
 export default function MenuCyberbugs() {
   return (
@@ -16,7 +17,8 @@ export default function MenuCyberbugs() {
   );
 }
 
-{/* <div className="control">
+{
+  /* <div className="control">
         <div>
           <i className="mr-1 fa fa-credit-card" />
           <NavLink className="text-dark" to="/indexcyberbugs">
@@ -57,4 +59,5 @@ export default function MenuCyberbugs() {
           <i className="mr-1 fa fa-box" />
           <span>Components</span>
         </div>
-      </div> */}
+      </div> */
+}
