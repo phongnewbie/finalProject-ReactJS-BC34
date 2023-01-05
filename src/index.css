@@ -474,4 +474,7 @@
   .container h3 {
     padding-left: 300px;
   }
+  .login-warp .ant-form-item-control-input-content {
+    margin-right: 200px;
+  }
 }

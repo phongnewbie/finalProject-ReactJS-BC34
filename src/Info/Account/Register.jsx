@@ -33,7 +33,9 @@ export default function Register() {
               onFinish={onSubmit}
               autoComplete="on"
             >
-              <span id="signup">Sign up</span>
+              <span id="signup" className="">
+                Sign up
+              </span>
               <Form.Item
                 name="email"
                 rules={[

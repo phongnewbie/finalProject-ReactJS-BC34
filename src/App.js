@@ -24,11 +24,10 @@ function App() {
       <HistoryRouter history={history}>
         <DrawerCyber />
         <Routes>
-          <Route>
-            <Route path="/login" element={<LogIn />}>
-              <Route element={<Register />} />
+          <Route path="/">
+            <Route path="login" element={<LogIn/>}></Route>
+              <Route path="Register" element={<Register/>} />
             </Route>
-          </Route>
           <Route path="/" element={<TrangChu />}>
             <Route path="/" element={<ProjectManagement />} />
             <Route path="/indexcyberbugs" element={<IndexCyberbugs />} />
