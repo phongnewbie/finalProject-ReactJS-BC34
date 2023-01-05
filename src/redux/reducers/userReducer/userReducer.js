@@ -47,17 +47,17 @@ export const callArrUser = () => async (dispatch) => {
 };
 export const callSignUp = (signUpInfo) => async (dispatch) => {
   try {
-    const signUp = await http.post("/Users/signup", signUpInfo);
+    const signUp = await http.post("api/Users/signup", signUpInfo);
     alert("Đăng ký thành công");
     history.push("/login");
   } catch (err) {
-    alert("Tai khoan da ton tai");
+    alert("Hong đăng ký được");
   }
 };
 export const callSignIn = (signInInfo) => async (dispatch) => {
   try {
-    const signIn = await http.post("/Users/signin", signInInfo);
-    history.push("/signIn");
+    const signUp = await http.post("/Users/signin", signInInfo);
+    history.push("/");
   } catch (err) {
     return new Promise((resolve, reject) =>
       resolve({ isError: true, message: err.response.data.content })

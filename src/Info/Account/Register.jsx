@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { callSignUp } from "../../redux/reducers/userReducer/userReducer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { getStringLocal } from "../../utils/config";
 import { USER_LOGIN } from "../../utils/constant";
 import { Form, notification, Input, Button } from "antd";
@@ -20,7 +20,6 @@ export default function Register() {
     });
   };
   return (
-    // <h1>hi</h1>
     <section className="vh-100 pt-5">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
@@ -33,9 +32,7 @@ export default function Register() {
               onFinish={onSubmit}
               autoComplete="on"
             >
-              <span id="signup" className="">
-                Sign up
-              </span>
+              <span id="signup">Sign up</span>
               <Form.Item
                 name="email"
                 rules={[
@@ -100,10 +97,10 @@ export default function Register() {
                 </Button>
               </Form.Item>
               <span>
-                Already have account??{" "}
+                You have an account ?{" "}
                 <a
                   onClick={() => {
-                    navigate("/login");
+                    navigate("/Account/Login");
                   }}
                   className="fw-bolder text-black"
                 >

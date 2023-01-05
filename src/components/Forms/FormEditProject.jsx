@@ -52,9 +52,6 @@ function FormEditProject(props) {
   const handleEditorChange = (content, editor) => {
     setFieldValue("description", content);
   };
-  const listProject = useSelector(
-    (state) => state.projectCyberBugsReducer.listProject
-  );
 
   return (
     <form

@@ -19,7 +19,7 @@ export default function LogIn() {
   let [reset, setReset] = useState(0);
   let isLogin = localStorage.getItem(USER_LOGIN);
   let dispatch = useDispatch();
-  //let navigate = useNavigate();
+  // let navigate = useNavigate();
   const onFinish = async (values) => {
     try {
       let { email, passWord } = values;
@@ -102,7 +102,7 @@ export default function LogIn() {
                   }}
                 >
                   <span className="login-link">
-                    <NavLink to="/Register">Bạn chưa có tài khoản?</NavLink> |
+                    <NavLink to="/register">Bạn chưa có tài khoản?</NavLink> |
                     {""}
                     <a href="/">Trang Chủ</a>
                   </span>

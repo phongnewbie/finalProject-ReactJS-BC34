@@ -467,14 +467,3 @@
 .siderBar {
   position: fixed;
 }
-@media only screen and (max-width: 400px) {
-  .menu .account {
-    display: block;
-  }
-  .container h3 {
-    padding-left: 300px;
-  }
-  .login-warp .ant-form-item-control-input-content {
-    margin-right: 200px;
-  }
-}

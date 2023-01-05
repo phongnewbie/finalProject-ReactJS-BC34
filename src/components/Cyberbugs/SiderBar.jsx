@@ -68,7 +68,13 @@ export default function SiderBar() {
     //   getItem(<NavLink to="quanly">Quản lý người dùng</NavLink>),
     //   getItem(<NavLink to="adduser">Thêm người dùng</NavLink>),
     // ]),
-    getItem("Search", "1", <SearchOutlined />),
+    getItem(
+      "User",
+      "1",
+      <NavLink to="/user">
+        <UserOutlined />
+      </NavLink>
+    ),
     getItem(
       "Create Task",
       "2",

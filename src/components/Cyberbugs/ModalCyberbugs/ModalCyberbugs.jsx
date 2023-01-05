@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import parse from "html-react-parser";
 import { useFormik } from "formik";
@@ -20,6 +20,11 @@ import {
   getTaskDetailDelete,
   getUpdateTask,
 } from "../../../redux/reducers/taskDetailReducer";
+import {
+  callContentComment,
+  callInsertComment,
+  callDeleteComment,
+} from "../../../redux/reducers/commentReducer/commentReducer";
 
 export default function ModalCyberbugs(props) {
   const dispatch = useDispatch();
@@ -30,8 +35,10 @@ export default function ModalCyberbugs(props) {
   const { projectDetail } = useSelector(
     (state) => state.projectCyberBugsReducer
   );
+  const { contentComment } = useSelector((state) => state.commentReducer);
+  const { user } = contentComment;
 
-  // console.log("taskDetail", taskDetail);
+  console.log("taskDetail", taskDetail);
   // console.log("projectDetail", projectDetail);
 
   const formik = useFormik({
@@ -95,7 +102,10 @@ export default function ModalCyberbugs(props) {
     dispatch(callArrStatus());
     dispatch(callgetPriority());
     dispatch(callTaskTypeProjact());
+    dispatch(callContentComment(taskDetail.taskId));
   }, []);
+
+  const [comment, setComment] = useState("");
 
   const [visibleEditer, setVisibleEditer] = useState(false);
   const [historyContent, setHistoryContent] = useState(taskDetail.description);
@@ -384,12 +394,38 @@ export default function ModalCyberbugs(props) {
                       >
                         <div className="avatar">
                           <img
-                            src={require("../../../assets/img/download (1).jfif")}
+                            src={taskDetail?.lstComment.map((user, index) => {
+                              return user.avatar;
+                            })}
                             alt="1"
                           />
                         </div>
                         <div className="input-comment">
-                          <input type="text" placeholder="Add a comment ..." />
+                          <input
+                            id="inputComment"
+                            value={comment}
+                            onChange={(e) => {
+                              setComment(e.target.value);
+                            }}
+                            type="text"
+                            placeholder="Add a comment ..."
+                          />
+                          <div
+                            onClick={(e) => {
+                              dispatch(
+                                callInsertComment({
+                                  taskId: taskDetail.taskId,
+                                  contentComment:
+                                    document.getElementById("inputComment")
+                                      .value,
+                                })
+                              );
+
+                              setComment("");
+                            }}
+                          >
+                            Submit
+                          </div>
                           <p>
                             <span style={{ fontWeight: 500, color: "gray" }}>
                               Protip:
@@ -410,34 +446,44 @@ export default function ModalCyberbugs(props) {
                           </p>
                         </div>
                       </div>
+                      <hr />
                       <div className="lastest-comment">
                         <div className="comment-item">
-                          <div
-                            className="display-comment"
-                            style={{ display: "flex" }}
-                          >
-                            <div className="avatar">
-                              <img
-                                src={require("../../../assets/img/download (1).jfif")}
-                                alt="1"
-                              />
-                            </div>
-                            <div>
-                              <p style={{ marginBottom: 5 }}>
-                                Lord Gaben <span>a month ago</span>
-                              </p>
-                              <p style={{ marginBottom: 5 }}>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Repellendus tempora ex
-                                voluptatum saepe ab officiis alias totam ad
-                                accusamus molestiae?
-                              </p>
-                              <div>
-                                <span style={{ color: "#929398" }}>Edit</span>•
-                                <span style={{ color: "#929398" }}>Delete</span>
+                          {taskDetail?.lstComment.map((user, index) => {
+                            return (
+                              <div
+                                className="display-comment mt-2"
+                                style={{ display: "flex" }}
+                              >
+                                <div className="avatar">
+                                  <img src={user.avatar} alt="1" />
+                                </div>
+                                <div>
+                                  <h5 style={{ marginBottom: 5 }}>
+                                    {user.name}
+                                  </h5>
+                                  <p style={{ marginBottom: 5 }}>
+                                    {user.commentContent}
+                                  </p>
+                                  <div>
+                                    <span style={{ color: "#929398" }}>
+                                      Edit
+                                    </span>
+                                    •
+                                    <span
+                                      onClick={() => {
+                                        dispatch(callDeleteComment(user.id));
+                                        // window.location.reload(user);
+                                      }}
+                                      style={{ color: "#929398" }}
+                                    >
+                                      Delete
+                                    </span>
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>

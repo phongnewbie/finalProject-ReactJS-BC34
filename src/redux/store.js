@@ -11,7 +11,9 @@ import priorityReducer from "./reducers/priorityReducer";
 import statusReducer from "./reducers/statusReducer";
 import taskDetailReducer from "./reducers/taskDetailReducer";
 import updateProjectReducer from "./reducers/updateProject/updateProjectReducer";
-import { callSignUp } from "./reducers/userReducer/userReducer";
+import commentReducer from "./reducers/commentReducer/commentReducer";
+import listUser from "./reducers/userReducer/listUser";
+
 export const store = configureStore({
   reducer: {
     proJectCategoryReducer,
@@ -25,7 +27,8 @@ export const store = configureStore({
     statusReducer,
     taskDetailReducer,
     updateProjectReducer,
-    callSignUp
+    commentReducer,
+    listUser,
   },
 });
 

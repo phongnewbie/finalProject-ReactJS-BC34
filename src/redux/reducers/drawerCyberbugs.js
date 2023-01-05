@@ -8,9 +8,6 @@ const initialState = {
   callBackSubmit: (propsValue) => {
     alert("click demo!");
   },
-  updateMethod: (value) =>{
-    console.log("hello");
-  }
 };
 
 const drawerCyberbugs = createSlice({
@@ -35,9 +32,6 @@ const drawerCyberbugs = createSlice({
       //   state.visible = true;
       state.callBackSubmit = payload;
     },
-    setUpdate:(state,{type,payload}) =>{
-      state.updateMethod = payload 
-    }
   },
 });
 
@@ -45,7 +39,7 @@ export const {
   openVisible,
   closeVisible,
   openForm,
-  setUpdate,
+  setSubmitEdit,
   titleName,
   setCallBackSubmit,
 } = drawerCyberbugs.actions;

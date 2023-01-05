@@ -1,16 +1,4 @@
-import React, { useState } from "react";
-import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-
-import { Button, Menu, Switch } from "antd";
+import React from "react";
 
 export default function HeaderMain(props) {
   return (
@@ -18,7 +6,7 @@ export default function HeaderMain(props) {
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb" style={{ backgroundColor: "white" }}>
           <li className="breadcrumb-item">Project</li>
-          <li className="breadcrumb-item">USERS</li>
+          <li className="breadcrumb-item">CyberLearn</li>
           <li className="breadcrumb-item active" aria-current="page">
             {props.projectDetail.projectName}
           </li>

@@ -16,6 +16,7 @@ import CreateProject from "./pages/CyberBugs/CreateProject/CreateProject";
 import ProjectManagement from "./pages/CyberBugs/ProjectManagement/ProjectManagement";
 import FormEditProject from "./components/Forms/FormEditProject";
 import DrawerCyber from "./HOC/DrawerCyber";
+import UserCyberbugs from "./components/Cyberbugs/UserCyberbugs/UserCyberbugs";
 import DemoDragDrop from "./pages/DemoDragDrop/demoDragDrop";
 
 function App() {
@@ -25,9 +26,10 @@ function App() {
         <DrawerCyber />
         <Routes>
           <Route>
-            <Route path="/login" element={<LogIn/>}></Route>
-              <Route path="Register" element={<Register/>} />
+            <Route path="/login" element={<LogIn />}>
+              <Route element={<Register />} />
             </Route>
+          </Route>
           <Route path="/" element={<TrangChu />}>
             <Route path="/" element={<ProjectManagement />} />
             <Route path="/indexcyberbugs" element={<IndexCyberbugs />} />
@@ -35,6 +37,7 @@ function App() {
             <Route path="/createproject" element={<CreateProject />} />
             <Route path="/formeditproject" element={<FormEditProject />} />
             <Route path="/demoDragDrop" element={<DemoDragDrop />} />
+            <Route path="/user" element={<UserCyberbugs />} />
           </Route>
         </Routes>
       </HistoryRouter>
