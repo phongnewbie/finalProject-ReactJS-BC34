@@ -1,5 +1,8 @@
+import React, { useEffect, useState, useRef } from "react";
 import { createSlice } from "@reduxjs/toolkit";
 import { http } from "../../../utils/baseUrl";
+import { getTaskDetail } from "../taskDetailReducer";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 const initialState = {
   contentComment: [],
@@ -31,12 +34,14 @@ export const { getContentComment, getInsertComment, getDeleteComment } =
 export default commentReducer.reducer;
 
 export const callContentComment = (taskId) => async (dispatch) => {
+  console.log("taskId", taskId);
   try {
     const apiContentComment = await http.get(
       `/Comment/getAll?taskId=${taskId}`
     );
 
     dispatch(getContentComment(apiContentComment.data.content));
+    console.log(apiContentComment.data.content);
   } catch (err) {
     console.log("lỗi contentComment", err.response?.data);
   }
@@ -44,16 +49,16 @@ export const callContentComment = (taskId) => async (dispatch) => {
 
 export const callInsertComment = (id) => async (dispatch) => {
   console.log("id", id);
+
   try {
     const apiInsertComment = await http.post("/Comment/insertComment", id);
 
     const apiContentComment = await http.get(
       `/Comment/getAll?taskId=${id.taskId}`
     );
-    dispatch(getInsertComment(apiInsertComment.data.content));
 
     console.log(apiContentComment.data.content);
-    // dispatch(getContentComment(apiContentComment.data.content));
+    dispatch(getContentComment(apiContentComment.data.content));
   } catch (err) {
     console.log("lỗi contentComment", err.response?.data);
   }
@@ -64,7 +69,6 @@ export const callDeleteComment = (id) => async (dispatch) => {
     const apiDeleteComment = await http.delete(
       `/Comment/deleteComment?idComment=${id}`
     );
-    console.log(id);
 
     // dispatch(getDeleteComment(apiDeleteComment.data.content));
   } catch (err) {

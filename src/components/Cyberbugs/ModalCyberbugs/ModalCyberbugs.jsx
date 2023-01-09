@@ -25,6 +25,7 @@ import {
   callInsertComment,
   callDeleteComment,
 } from "../../../redux/reducers/commentReducer/commentReducer";
+import { callGetProjectDetail } from "../../../redux/reducers/projectCyberBugsReducer";
 
 export default function ModalCyberbugs(props) {
   const dispatch = useDispatch();
@@ -35,27 +36,13 @@ export default function ModalCyberbugs(props) {
   const { projectDetail } = useSelector(
     (state) => state.projectCyberBugsReducer
   );
-  const { contentComment } = useSelector((state) => state.commentReducer);
-  const { user } = contentComment;
 
   console.log("taskDetail", taskDetail);
-  // console.log("projectDetail", projectDetail);
+  console.log("projectDetail", projectDetail);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      // listUserAsign: [0],
-      // taskId: taskDetail.taskId,
-      // taskName: taskDetail.taskName,
-      // description: taskDetail.description,
-      // statusId: taskDetail.statusId,
-      // originalEstimate: taskDetail.originalEstimate,
-      // timeTrackingSpent: taskDetail.timeTrackingSpent,
-      // timeTrackingRemaining: taskDetail.timeTrackingRemaining,
-      // projectId: taskDetail.projectId,
-      // typeId: taskDetail.typeId,
-      // priorityId: taskDetail.priorityId,
-
       priorityTask: taskDetail.priorityTask,
       taskTypeDetail: taskDetail.taskTypeDetail,
       assigness: taskDetail.assigness,
@@ -87,22 +74,34 @@ export default function ModalCyberbugs(props) {
       });
 
       dispatch(callUpdateTask(values));
-
-      // const getApiChiTiet = async () => {
-      //   await window.location.reload(projectDetail);
-      // };
-      // setTimeout(() => {
-      //   getApiChiTiet();
-      // }, 500);
     },
   });
+  const { contentComment } = useSelector((state) => state.commentReducer);
+  // console.log("contentComment", contentComment);
+  const [commentUp, setCommentUp] = useState(contentComment);
+
+  const getApiComment = async () => {
+    try {
+      dispatch(callContentComment(taskDetail.taskId));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getApiProjectDetail = async () => {
+    try {
+      dispatch(callGetProjectDetail(taskDetail.projectId));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     // dispatch(callTaskDetail());
     dispatch(callArrStatus());
     dispatch(callgetPriority());
     dispatch(callTaskTypeProjact());
-    dispatch(callContentComment(taskDetail.taskId));
+    getApiComment();
+    getApiProjectDetail();
   }, []);
 
   const [comment, setComment] = useState("");
@@ -313,19 +312,7 @@ export default function ModalCyberbugs(props) {
             <div className="modal-header">
               <div className="task-title">
                 <i className="fa fa-bookmark" />
-                <select
-                  name="taskId"
-                  value={taskDetail.taskId}
-                  onChange={handleChangeTh}
-                >
-                  {arrTaskType.map((tp, index) => {
-                    return (
-                      <option key={index} value={tp.id}>
-                        {tp.taskType}
-                      </option>
-                    );
-                  })}
-                </select>
+
                 <span>{taskDetail?.taskName}</span>
               </div>
               <div style={{ display: "flex" }} className="task-click">
@@ -394,7 +381,7 @@ export default function ModalCyberbugs(props) {
                       >
                         <div className="avatar">
                           <img
-                            src={taskDetail?.lstComment.map((user, index) => {
+                            src={contentComment?.map((user, index) => {
                               return user.avatar;
                             })}
                             alt="1"
@@ -420,7 +407,7 @@ export default function ModalCyberbugs(props) {
                                       .value,
                                 })
                               );
-
+                              setCommentUp(commentUp);
                               setComment("");
                             }}
                           >
@@ -475,7 +462,10 @@ export default function ModalCyberbugs(props) {
                                         dispatch(callDeleteComment(user.id));
                                         // window.location.reload(user);
                                       }}
-                                      style={{ color: "#929398" }}
+                                      style={{
+                                        color: "#929398",
+                                        cursor: "pointer",
+                                      }}
                                     >
                                       Delete
                                     </span>

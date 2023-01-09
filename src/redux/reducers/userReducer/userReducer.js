@@ -47,16 +47,20 @@ export const callArrUser = () => async (dispatch) => {
 };
 export const callSignUp = (signUpInfo) => async (dispatch) => {
   try {
-    const signUp = await http.post("api/Users/signup", signUpInfo);
+    const signUp = await http.post("/Users/signup", signUpInfo);
     alert("Đăng ký thành công");
     history.push("/login");
   } catch (err) {
-    alert("Hong đăng ký được");
+    console.log("lỗi", err.response?.data.message);
+
+    alert(err.response?.data.message);
   }
 };
 export const callSignIn = (signInInfo) => async (dispatch) => {
   try {
     const signUp = await http.post("/Users/signin", signInInfo);
+    saveStringLocal(USER_LOGIN, signUp.data.content.accessToken);
+
     history.push("/");
   } catch (err) {
     return new Promise((resolve, reject) =>

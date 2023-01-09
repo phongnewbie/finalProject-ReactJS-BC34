@@ -24,7 +24,10 @@ import {
   openForm,
   titleName,
 } from "../../../redux/reducers/drawerCyberbugs";
-import { editProjact } from "../../../redux/reducers/projectReducer";
+import {
+  editProjact,
+  callEditProject,
+} from "../../../redux/reducers/projectReducer";
 import {
   callGetUser,
   callAssignUser,
@@ -275,9 +278,11 @@ export default function ProjectManagement(props) {
           <NavLink
             onClick={() => {
               dispatch(titleName(record.projectName));
-              dispatch(openVisible(), openForm());
+              dispatch(openVisible());
+              dispatch(callOpenForm());
               dispatch(editProjact(record));
-              console.log(record);
+              // dispatch(callEditProject(record));
+              console.log("okokoko", record);
             }}
             style={{ color: "blue" }}
           >

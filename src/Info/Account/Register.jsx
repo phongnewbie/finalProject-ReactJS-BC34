@@ -1,116 +1,115 @@
 import React, { useState } from "react";
+import { Form, Input, Select, Button } from "antd";
 import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 import { callSignUp } from "../../redux/reducers/userReducer/userReducer";
-import { useNavigate } from "react-router";
-import { getStringLocal } from "../../utils/config";
-import { USER_LOGIN } from "../../utils/constant";
-import { Form, notification, Input, Button } from "antd";
 export default function Register() {
-  let navigate = useNavigate();
-  let isLogin = getStringLocal(USER_LOGIN);
   let dispatch = useDispatch();
-  const onSubmit = (values) => {
+  const onFinish = (values) => {
     dispatch(callSignUp(values));
-    console.log(callSignUp);
+    console.log(values);
   };
-  const openNotificationWithIcon = () => {
-    notification["error"]({
-      message: "Notification !",
-      description: "Email already in use!",
-    });
+
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
   };
   return (
-    <section className="vh-100 pt-5">
-      <div className="container-fluid h-custom">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-md-8 col-lg-6 col-xl-4">
-            <Form
-              name="basic"
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={onSubmit}
-              autoComplete="on"
-            >
-              <span id="signup">Sign up</span>
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your email !",
-                  },
-                  {
-                    type: "email",
-                  },
-                ]}
-              >
-                <Input type="email" placeholder="Email" />
-              </Form.Item>
+    <div style={{ width: "600px", marginTop: "100px" }} className="container">
+      <h2 className="text-center mb-5">Đăng ký</h2>
+      <div className="signup-warp">
+        <Form {...layout} name="register" onFinish={onFinish}>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              {
+                required: true,
+                message: "Hãy nhập Email !",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="passWord"
+            label="Mật khẩu"
+            rules={[
+              {
+                required: true,
+                message: "Hãy nhập mật khẩu!",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input.Password />
+          </Form.Item>
 
-              <Form.Item
-                name="passWord"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your password!",
-                  },
-                  {
-                    type: "string",
-                    min: 0,
-                    max: 10,
-                  },
-                ]}
-              >
-                <Input type="password" placeholder="Password" />
-              </Form.Item>
-              <Form.Item
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your name!",
-                  },
-                ]}
-              >
-                <Input placeholder="Name" />
-              </Form.Item>
-              <Form.Item
-                name="phoneNumber"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your phone number!",
-                  },
-                  {
-                    type: "string",
-                    min: 10,
-                    max: 10,
-                  },
-                ]}
-              >
-                <Input placeholder="Phone number" />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Sign up
-                </Button>
-              </Form.Item>
-              <span>
-                You have an account ?{" "}
-                <a
-                  onClick={() => {
-                    navigate("/Account/Login");
-                  }}
-                  className="fw-bolder text-black"
-                >
-                  Log in
-                </a>
-              </span>
-            </Form>
+          <Form.Item
+            name="passWord"
+            label="Nhập lại mật khẩu"
+            dependencies={["passWord"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Mật khẩu không khớp!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("passWord") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("Mật khẩu không khớp!"));
+                },
+              }),
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[
+              // {
+              //   type: "email",
+              //   message: "Email không đúng định dạng !",
+              // },
+              {
+                required: true,
+                message: "Hãy nhập Name !",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="phoneNumber"
+            label="Số điện thoại"
+            rules={[
+              {
+                required: true,
+                message: "Hãy nhập số điện thoại",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <div style={{ textAlign: "right" }} className="mt-2">
+            <NavLink to="/login" className="signup-link">
+              Bạn đã có tài khoản
+            </NavLink>
           </div>
-        </div>
+          <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
       </div>
-    </section>
+    </div>
   );
 }

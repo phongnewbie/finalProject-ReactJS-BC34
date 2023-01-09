@@ -4,18 +4,11 @@ import useRoute from "../../hooks/useRoute";
 
 import { useDispatch } from "react-redux";
 import { USER_LOGIN } from "../../utils/constant";
-import { getStringLocal } from "../../utils/config";
 import "../../components/LayOut/main.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import Register from "./Register";
-import { callSignIn } from "../../reducer/userReducer/userReducer";
+import { callSignIn } from "../../redux/reducers/userReducer/userReducer";
 
 export default function LogIn() {
-  const {
-    params,
-    navigate,
-    searchParams: [searchParams, setSearchParams],
-  } = useRoute();
   let [reset, setReset] = useState(0);
   let isLogin = localStorage.getItem(USER_LOGIN);
   let dispatch = useDispatch();

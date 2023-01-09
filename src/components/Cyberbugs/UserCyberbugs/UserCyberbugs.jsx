@@ -14,8 +14,13 @@ import {
   getDsNguoiDung,
   callApiXoaNguoiDung,
   getEditUser,
+  getInfoUser,
 } from "../../../redux/reducers/userReducer/listUser";
 import { history } from "../../../utils/history";
+import {
+  callOpenFormEditUser,
+  openVisible,
+} from "../../../redux/reducers/drawerCyberbugs";
 
 const { Search } = Input;
 const suffix = (
@@ -85,7 +90,10 @@ export default function UserCyberbugs() {
               style={{ color: "blue" }}
               className="mr-2"
               onClick={() => {
-                dispatch(getEditUser());
+                dispatch(callOpenFormEditUser());
+                dispatch(openVisible());
+                dispatch(getInfoUser(user.userId));
+                console.log("ihhhh", user.userId);
               }}
             >
               <EditOutlined />{" "}
@@ -114,14 +122,7 @@ export default function UserCyberbugs() {
   return (
     <div className="container">
       <h3 className="mb-4">Quản lý người dùng</h3>
-      <Button
-        onClick={() => {
-          history.push("/");
-        }}
-        className="mb-3"
-      >
-        Thêm người dùng
-      </Button>
+
       <Search
         className="mb-3"
         placeholder="tìm kiếm người dùng"

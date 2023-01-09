@@ -28,12 +28,13 @@ export default projectReducer.reducer;
 export const callEditProject = (values) => async (dispatch) => {
   try {
     const apiEditProject = await http.put(
-      `/Project/updateProject?projectId=${values}`
+      `/Project/updateProject?projectId=${values.id}`,
+      values
     );
     dispatch(editProjact(apiEditProject.data.content));
-    console.log("gogogo", apiEditProject());
+    console.log("gogogo", apiEditProject);
   } catch (err) {
-    console.log("lỗi", err.response?.data);
+    console.log("lỗi", err.response?.data.message);
   }
 };
 

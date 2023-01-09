@@ -4,7 +4,10 @@ import { callSubmitEdit } from "../../redux/reducers/drawerCyberbugs";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { callProjectCategory } from "../../redux/reducers/projectCategoryReducer/proJectCategoryReducer";
 import { callEditProject } from "../../redux/reducers/projectReducer";
-import { closeVisible } from "../../redux/reducers/drawerCyberbugs";
+import {
+  closeVisible,
+  setCallBackSubmit,
+} from "../../redux/reducers/drawerCyberbugs";
 import { callProjectList } from "../../redux/reducers/projectCyberBugsReducer";
 
 import { withFormik } from "formik";
@@ -45,6 +48,8 @@ function FormEditProject(props) {
 
   useEffect(() => {
     getProjectCategory();
+    dispatch(setCallBackSubmit(handleSubmit));
+
     // getEditForm();
     // dispatch({ type: "SET_SUBMIT_EDIT", submitFunction: handleSubmit });
   }, []);
@@ -154,6 +159,7 @@ const editProjectForm = withFormik({
     props.dispatch(callEditProject(values));
     props.dispatch(closeVisible());
     props.dispatch(callProjectList());
+    window.location.reload();
   },
   displayName: "editProjectForm",
 })(FormEditProject);

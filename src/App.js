@@ -18,6 +18,7 @@ import FormEditProject from "./components/Forms/FormEditProject";
 import DrawerCyber from "./HOC/DrawerCyber";
 import UserCyberbugs from "./components/Cyberbugs/UserCyberbugs/UserCyberbugs";
 import DemoDragDrop from "./pages/DemoDragDrop/demoDragDrop";
+import FormEditUser from "./components/Forms/FormEditUser";
 
 function App() {
   return (
@@ -26,9 +27,8 @@ function App() {
         <DrawerCyber />
         <Routes>
           <Route>
-            <Route path="/login" element={<LogIn />}>
-              <Route element={<Register />} />
-            </Route>
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/register" element={<Register />} />
           </Route>
           <Route path="/" element={<TrangChu />}>
             <Route path="/" element={<ProjectManagement />} />
@@ -36,6 +36,7 @@ function App() {
             <Route path="/projectdetail/:id" element={<IndexCyberbugs />} />
             <Route path="/createproject" element={<CreateProject />} />
             <Route path="/formeditproject" element={<FormEditProject />} />
+            <Route path="/user/formedituser" element={<FormEditUser />} />
             <Route path="/demoDragDrop" element={<DemoDragDrop />} />
             <Route path="/user" element={<UserCyberbugs />} />
           </Route>

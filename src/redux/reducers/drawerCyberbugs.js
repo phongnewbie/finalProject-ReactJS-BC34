@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import FormEditProject from "../../components/Forms/FormEditProject";
+import FormCreateTask from "../../components/Forms/FormCreateTask";
+import FormEditUser from "../../components/Forms/FormEditUser";
 
 const initialState = {
   visible: false,
@@ -24,6 +26,14 @@ const drawerCyberbugs = createSlice({
       //   state.visible = true;
       state.compomenContentDrawer = payload;
     },
+    openFormTask: (state, { type, payload }) => {
+      //   state.visible = true;
+      state.compomenContentDrawer = payload;
+    },
+    openFormUser: (state, { type, payload }) => {
+      //   state.visible = true;
+      state.compomenContentDrawer = payload;
+    },
     titleName: (state, { type, payload }) => {
       //   state.visible = true;
       state.title = payload;
@@ -42,6 +52,8 @@ export const {
   setSubmitEdit,
   titleName,
   setCallBackSubmit,
+  openFormTask,
+  openFormUser,
 } = drawerCyberbugs.actions;
 
 export default drawerCyberbugs.reducer;
@@ -49,4 +61,14 @@ export default drawerCyberbugs.reducer;
 export const callOpenForm = () => (dispatch) => {
   const action = <FormEditProject />;
   dispatch(openForm(action));
+};
+
+export const callOpenFormCreateTask = () => (dispatch) => {
+  const action = <FormCreateTask />;
+  dispatch(openFormTask(action));
+};
+
+export const callOpenFormEditUser = () => (dispatch) => {
+  const action = <FormEditUser />;
+  dispatch(openFormUser(action));
 };

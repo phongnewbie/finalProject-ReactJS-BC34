@@ -13,11 +13,12 @@ import { Layout, Menu, theme } from "antd";
 import {
   openVisible,
   closeVisible,
-  openForm,
+  openFormTask,
   titleName,
 } from "../../redux/reducers/drawerCyberbugs";
 import { useDispatch, useSelector } from "react-redux";
 import FormCreateTask from "../Forms/FormCreateTask";
+import { callOpenFormCreateTask } from "../../redux/reducers/drawerCyberbugs";
 
 const { Header, Sider, Content } = Layout;
 function getItem(label, key, icon, children) {
@@ -80,7 +81,7 @@ export default function SiderBar() {
       "2",
       <NavLink
         onClick={() => {
-          dispatch(openForm(<FormCreateTask />));
+          dispatch(callOpenFormCreateTask());
           dispatch(openVisible());
           dispatch(titleName("Create Task"));
         }}

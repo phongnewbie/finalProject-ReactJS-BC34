@@ -29,7 +29,7 @@ const initialState = {
       },
     ],
     lstComment: [],
-    taskId: 7766,
+    taskId: 8007,
     taskName: "thanhfdđ",
     alias: "thanhfdd",
     description:
@@ -40,7 +40,7 @@ const initialState = {
     timeTrackingRemaining: 12,
     typeId: 2,
     priorityId: 1,
-    projectId: 10236,
+    projectId: 10346,
   },
 };
 

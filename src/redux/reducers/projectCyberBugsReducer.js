@@ -43,6 +43,7 @@ export default projectCyberBugsReducer.reducer;
 export const callProjectList = () => async (dispatch) => {
   try {
     const apiProjectList = await http.get("/Project/getAllProject");
+    console.log("hihi", apiProjectList);
     dispatch(getProjectList(apiProjectList.data.content));
   } catch (err) {
     console.log(err.response?.data);
@@ -89,6 +90,7 @@ export const callCreateTask = (taskOpject) => async (dispatch) => {
 };
 
 export const callGetProjectDetail = (projectId) => async (dispatch) => {
+  console.log("projectId", projectId);
   try {
     const apigetProjectDetail = await http.get(
       `/Project/getProjectDetail?id=${projectId}`
@@ -97,6 +99,6 @@ export const callGetProjectDetail = (projectId) => async (dispatch) => {
     dispatch(getProjectDetail(apigetProjectDetail.data.content));
   } catch (err) {
     console.log(err.response?.data);
-    history.push("/");
+    // history.push("/");
   }
 };

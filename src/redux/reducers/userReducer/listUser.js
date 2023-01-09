@@ -5,7 +5,15 @@ import { history } from "../../../utils/history";
 const initialState = {
   dataNguoiDung: [],
   dsNguoiDung: [],
-  thongTinNguoiDung: {},
+  thongTinNguoiDung: [
+    {
+      userId: 3375,
+      name: "nguyen hhh",
+      avatar: "https://ui-avatars.com/api/?name=nguyen hhh",
+      email: "mmnhhhh@gmail.com",
+      phoneNumber: "03112311231",
+    },
+  ],
 };
 
 const listUser = createSlice({
@@ -35,27 +43,26 @@ export const { layDataNguoiDung, laydsNguoiDung, layThongTinNguoiDung } =
 
 export default listUser.reducer;
 
-export const getThongTinNguoiDung = () => async (dispatch) => {
-  const getApiNguoiDung = await http.post("/QuanLyNguoiDung/ThongTinTaiKhoan");
-  dispatch(layDataNguoiDung(getApiNguoiDung.data.content));
-};
+// export const getThongTinNguoiDung = (taiKhoan) => async (dispatch) => {
+//   const getApiDsNguoiDung = await http.get(
+//     `/Users/getUser?keyword=${taiKhoan}`
+//   );
+//   dispatch(laydsNguoiDung(getApiDsNguoiDung.data.content));
+// };
 
 export const getInfoUser = (taiKhoan) => async (dispatch) => {
-  const getApiThongTinNguoiDung = await http.post(
-    `/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${taiKhoan}`
+  const getApiDsNguoiDung = await http.get(
+    `/Users/getUser?keyword=${taiKhoan}`
   );
-  dispatch(layThongTinNguoiDung(getApiThongTinNguoiDung.data.content));
+  console.log(getApiDsNguoiDung.data.content);
+  dispatch(layThongTinNguoiDung(getApiDsNguoiDung.data.content));
 };
 
 export const getEditUser = (taiKhoan) => async (dispatch) => {
   try {
-    const getApiEditUser = await http.post(
-      "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
-      taiKhoan
-    );
+    const getApiEditUser = await http.post("/Users/editUser", taiKhoan);
     console.log("ok", getApiEditUser.data.content);
     alert("Cập nhật thành công");
-    history.push("/admin/quanly");
     dispatch(layThongTinNguoiDung());
   } catch (err) {
     console.log(err.response?.data.content);
