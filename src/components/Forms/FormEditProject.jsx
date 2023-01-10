@@ -61,9 +61,6 @@ function FormEditProject(props) {
       onChange={handleChange}
       onSubmit={handleSubmit}
     >
-      <button className="btn btn-outline-primary" type="submit">
-        Create Project
-      </button>
       <div className="row">
         <div className="col-4 ">
           <div className="form-group">
@@ -156,8 +153,7 @@ const editProjectForm = withFormik({
     console.log("value", values);
     props.dispatch(callEditProject(values));
     props.dispatch(closeVisible());
-    props.dispatch(callProjectList());
-    window.location.reload();
+    // props.dispatch(callProjectList());
   },
   displayName: "editProjectForm",
 })(FormEditProject);

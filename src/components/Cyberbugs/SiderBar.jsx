@@ -30,45 +30,10 @@ function getItem(label, key, icon, children) {
   };
 }
 
-// const items = [
-//   //   <NavLink to="/films"></NavLink>,
-//   // getItem(<NavLink to="films">Quản lý phim</NavLink>, <PieChartOutlined />),
-//   // getItem("Phim", "sub1", <UserOutlined />, [
-//   //   getItem(<NavLink to="films">Quản lý phim</NavLink>),
-//   //   getItem(<NavLink to="addnew">Thêm phim</NavLink>),
-//   // ]),
-//   // getItem("User", "sub2", <UserOutlined />, [
-//   //   getItem(<NavLink to="quanly">Quản lý người dùng</NavLink>),
-//   //   getItem(<NavLink to="adduser">Thêm người dùng</NavLink>),
-//   // ]),
-//   getItem("Search", "1", <SearchOutlined />),
-//   getItem(
-//     "Create Task",
-//     "2",
-//     <button
-//       onClick={() => {
-//         useDispatch(openVisible(), openForm());
-//       }}
-//     >
-//       <PlusOutlined />
-//     </button>
-//   ),
-// ];
-
 export default function SiderBar() {
   const dispatch = useDispatch();
 
   const items = [
-    //   <NavLink to="/films"></NavLink>,
-    // getItem(<NavLink to="films">Quản lý phim</NavLink>, <PieChartOutlined />),
-    // getItem("Phim", "sub1", <UserOutlined />, [
-    //   getItem(<NavLink to="films">Quản lý phim</NavLink>),
-    //   getItem(<NavLink to="addnew">Thêm phim</NavLink>),
-    // ]),
-    // getItem("User", "sub2", <UserOutlined />, [
-    //   getItem(<NavLink to="quanly">Quản lý người dùng</NavLink>),
-    //   getItem(<NavLink to="adduser">Thêm người dùng</NavLink>),
-    // ]),
     getItem(
       "User",
       "1",
@@ -91,7 +56,7 @@ export default function SiderBar() {
     ),
   ];
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer },
   } = theme.useToken();

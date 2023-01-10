@@ -43,7 +43,7 @@ export default projectCyberBugsReducer.reducer;
 export const callProjectList = () => async (dispatch) => {
   try {
     const apiProjectList = await http.get("/Project/getAllProject");
-    console.log("hihi", apiProjectList);
+    // console.log("hihi", apiProjectList);
     dispatch(getProjectList(apiProjectList.data.content));
   } catch (err) {
     console.log(err.response?.data);

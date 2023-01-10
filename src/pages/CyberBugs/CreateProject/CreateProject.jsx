@@ -9,14 +9,6 @@ import { withFormik } from "formik";
 import * as Yup from "yup";
 
 function CreateProject(props) {
-  // const onFinish = (values) => {
-  //   dispatch(callcreateProject(values));
-  //   console.log("ok", values);
-  // };
-
-  // const editorRef = useRef(null);
-  // const { Option } = Select;
-
   const {
     values,
     touched,
@@ -104,73 +96,6 @@ function CreateProject(props) {
           Create Project
         </button>
       </form>
-      {/* <Form
-        name="basic"
-        // labelCol={{
-        //   span: 8,
-        // }}
-        // wrapperCol={{
-        //   span: 8,
-        // }}
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        autoComplete="off"
-      >
-        <p>Name</p>
-        <Form.Item name="projectName">
-          <Input />
-        </Form.Item>
-
-        <p>Description</p>
-        <Form.Item name="description">
-          {" "}
-          <Editor
-            // onInit={(evt, editor) => (editorRef.current = editor)}
-            // initialValue="<p>This is the initial content of the editor.</p>"
-            init={{
-              height: 350,
-              menubar: false,
-              plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste code help wordcount",
-              ],
-              toolbar:
-                "undo redo | formatselect | " +
-                "bold italic backcolor | alignleft aligncenter " +
-                "alignright alignjustify | bullist numlist outdent indent | " +
-                "removeformat | help",
-              content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-            }}
-            onEditorChange={handleEditorChange}
-          />
-        </Form.Item>
-        <Form.Item name="categoryId">
-          <Select placeholder="Hãy chọn loại dự án">
-            {arrProjectCategory.map((item, index) => {
-              return (
-                <Option key={index} value={item.id}>
-                  {item.projectCategoryName}
-                </Option>
-              );
-            })}
-          </Select>
-        </Form.Item>
-
-        <Form.Item
-        // wrapperCol={{
-        //   offset: 8,
-        //   span: 8,
-        // }}
-        >
-          <Button className="mt-2 ms-2" type="primary" htmlType="submit">
-            Create Project
-          </Button>
-        </Form.Item>
-      </Form> */}
     </div>
   );
 }

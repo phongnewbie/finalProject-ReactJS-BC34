@@ -26,13 +26,16 @@ export const { editProjact } = projectReducer.actions;
 
 export default projectReducer.reducer;
 export const callEditProject = (values) => async (dispatch) => {
+  console.log(values);
   try {
     const apiEditProject = await http.put(
       `/Project/updateProject?projectId=${values.id}`,
       values
     );
     dispatch(editProjact(apiEditProject.data.content));
+
     console.log("gogogo", apiEditProject);
+    window.location.reload();
   } catch (err) {
     console.log("lỗi", err.response?.data.message);
   }

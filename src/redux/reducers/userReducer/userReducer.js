@@ -85,9 +85,10 @@ export const callAssignUser = (value) => async (dispatch) => {
     const apiProjectList = await http.get("/Project/getAllProject");
 
     dispatch(getProjectList(apiProjectList.data.content));
-    dispatch(getAssignUser(getAssignUser));
+    // dispatch(getAssignUser(getAssignUser));
   } catch (err) {
     console.log("lỗi data", err.response?.data);
+    alert(err.response?.data.message);
   }
 };
 

@@ -38,8 +38,7 @@ export const callcreateProject = (values) => async (dispatch) => {
     alert("Đăng ký thành công");
     history.push("/");
   } catch (err) {
-    alert("Bạn cần đăng nhập đễ tạo Project");
-    history.push("/login");
     console.log(err.response?.data);
+    alert(err.response?.data.message);
   }
 };
