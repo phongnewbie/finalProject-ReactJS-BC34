@@ -1,0 +1,5 @@
+-Ngô thanh phong: Trang đăng ký, trang đăng nhập, chức năng add member,xóa member, chức năng Drag Drop, 
+
+-Huỳnh Tấn Thành: làn layout,chức năng CreateProject, load danh sách Project,edit project, search project, chức năng CreateTask
+
+-Huỳnh Minh Hoàng: tạo trang user , edit user , xóa user ,tạo thanh menu, editTask
