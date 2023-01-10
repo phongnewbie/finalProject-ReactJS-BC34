@@ -113,5 +113,6 @@ export const callUpdateTask = (taskUpdate) => async (dispatch) => {
     console.log();
   } catch (err) {
     console.log("lỗi updateTask", err.response?.data);
+    alert(err.response?.data.message);
   }
 };

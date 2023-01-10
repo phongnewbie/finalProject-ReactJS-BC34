@@ -49,9 +49,6 @@ function FormEditProject(props) {
   useEffect(() => {
     getProjectCategory();
     dispatch(setCallBackSubmit(handleSubmit));
-
-    // getEditForm();
-    // dispatch({ type: "SET_SUBMIT_EDIT", submitFunction: handleSubmit });
   }, []);
 
   const handleEditorChange = (content, editor) => {
@@ -146,6 +143,7 @@ const editProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     const { projectEdit } = props;
+    console.log(projectEdit);
     return {
       id: projectEdit?.id,
       projectName: projectEdit?.projectName,

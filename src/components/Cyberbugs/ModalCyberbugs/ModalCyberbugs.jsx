@@ -26,6 +26,7 @@ import {
   callDeleteComment,
 } from "../../../redux/reducers/commentReducer/commentReducer";
 import { callGetProjectDetail } from "../../../redux/reducers/projectCyberBugsReducer";
+import { getProjectDetail } from "../../../redux/reducers/projectCyberBugsReducer";
 
 export default function ModalCyberbugs(props) {
   const dispatch = useDispatch();
@@ -37,8 +38,8 @@ export default function ModalCyberbugs(props) {
     (state) => state.projectCyberBugsReducer
   );
 
-  console.log("taskDetail", taskDetail);
-  console.log("projectDetail", projectDetail);
+  // console.log("taskDetail", taskDetail);
+  // console.log("projectDetail", projectDetail);
 
   const formik = useFormik({
     enableReinitialize: true,

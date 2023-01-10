@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { removeLocal } from "../../utils/config";
+import { USER_LOGIN } from "../../utils/constant";
 
 export default function MenuCyberbugs() {
+  const [srHeader, setSrHeader] = useState(1);
+
   return (
     <div className="menu">
       <div className="account">
@@ -15,12 +19,6 @@ export default function MenuCyberbugs() {
       </div>
       <div className="control">
         <div>
-          <i className="mr-1 fa fa-credit-card" />
-          <NavLink className="text-dark" to="/indexcyberbugs">
-            Cyber Board
-          </NavLink>
-        </div>
-        <div>
           <i className="mr-1 fa fa-cog" />
           <NavLink className="text-dark" to="/">
             Project management
@@ -30,6 +28,18 @@ export default function MenuCyberbugs() {
           <i className="mr-1 fa fa-cog" />
           <NavLink className="text-dark" to="/createproject">
             Create project
+          </NavLink>
+        </div>
+        <div>
+          <i className="mr-1 fa fa-credit-card" />
+          <NavLink
+            className="text-dark"
+            onClick={() => {
+              removeLocal(USER_LOGIN);
+              setSrHeader(srHeader + 1);
+            }}
+          >
+            LogOut
           </NavLink>
         </div>
       </div>

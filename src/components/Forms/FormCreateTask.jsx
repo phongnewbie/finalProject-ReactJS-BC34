@@ -298,6 +298,8 @@ const formCreateTask = withFormik({
   validationSchem: Yup.object().shape({}),
   handleSubmit: (values, { props, setSubmitting }) => {
     props.dispatch(callCreateTask(values));
+    // window.location.reload();
+
     console.log("value ok", values);
   },
   displayName: "formCreateTask",

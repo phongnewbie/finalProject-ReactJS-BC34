@@ -7,11 +7,11 @@ const initialState = {
   dsNguoiDung: [],
   thongTinNguoiDung: [
     {
-      userId: 3375,
-      name: "nguyen hhh",
-      avatar: "https://ui-avatars.com/api/?name=nguyen hhh",
-      email: "mmnhhhh@gmail.com",
-      phoneNumber: "03112311231",
+      userId: 3683,
+      name: "thành",
+      avatar: "https://ui-avatars.com/api/?name=thành",
+      email: "thanhsonhoc001@gmail.com",
+      phoneNumber: "0003333",
     },
   ],
 };
@@ -59,13 +59,16 @@ export const getInfoUser = (taiKhoan) => async (dispatch) => {
 };
 
 export const getEditUser = (taiKhoan) => async (dispatch) => {
+  console.log(taiKhoan);
   try {
-    const getApiEditUser = await http.post("/Users/editUser", taiKhoan);
+    const getApiEditUser = await http.put("/Users/editUser", taiKhoan);
     console.log("ok", getApiEditUser.data.content);
     alert("Cập nhật thành công");
-    dispatch(layThongTinNguoiDung());
+    window.location.reload(layThongTinNguoiDung());
+
+    // dispatch(layThongTinNguoiDung(getApiEditUser.data.content));
   } catch (err) {
-    console.log(err.response?.data.content);
+    console.log(err.response?.data);
   }
 };
 

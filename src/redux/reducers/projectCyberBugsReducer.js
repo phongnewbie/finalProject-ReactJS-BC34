@@ -84,8 +84,10 @@ export const callCreateTask = (taskOpject) => async (dispatch) => {
     dispatch(getCreateTask(apiCreateTask.data.content));
     dispatch(closeVisible());
     alert("Create task successfulty !");
+    window.location.reload();
   } catch (err) {
     console.log(err.response?.data);
+    alert(err.response?.data.message);
   }
 };
 

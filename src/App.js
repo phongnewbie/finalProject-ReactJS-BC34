@@ -19,6 +19,7 @@ import DrawerCyber from "./HOC/DrawerCyber";
 import UserCyberbugs from "./components/Cyberbugs/UserCyberbugs/UserCyberbugs";
 import DemoDragDrop from "./pages/DemoDragDrop/demoDragDrop";
 import FormEditUser from "./components/Forms/FormEditUser";
+import InfoUser from "./Info/Account/InfoUser";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           </Route>
           <Route path="/" element={<TrangChu />}>
             <Route path="/" element={<ProjectManagement />} />
+            <Route path="/infouser" element={<InfoUser />} />
             <Route path="/indexcyberbugs" element={<IndexCyberbugs />} />
             <Route path="/projectdetail/:id" element={<IndexCyberbugs />} />
             <Route path="/createproject" element={<CreateProject />} />

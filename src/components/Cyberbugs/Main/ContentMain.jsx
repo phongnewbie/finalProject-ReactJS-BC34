@@ -4,6 +4,7 @@ import { callTaskDetail } from "../../../redux/reducers/taskDetailReducer";
 import { getProjectDetail } from "../../../redux/reducers/projectCyberBugsReducer";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { callUpdateStatus } from "../../../redux/reducers/updateProject/updateProjectReducer";
+import ModalCyberbugs from "../ModalCyberbugs/ModalCyberbugs";
 
 export default function ContentMain(props) {
   const dispatch = useDispatch();
